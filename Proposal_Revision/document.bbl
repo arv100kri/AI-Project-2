@@ -1,0 +1,25 @@
+\begin{thebibliography}{1}
+
+\bibitem{nielsen_noncommand_1993}
+J.~Nielsen.
+\newblock Noncommand user interfaces.
+\newblock {\em Communications of the {ACM}}, 36(4):83--99, 1993.
+
+\bibitem{mitra_gesture_2007}
+S.~Mitra and T.~Acharya.
+\newblock Gesture recognition: A survey.
+\newblock {\em Systems, Man, and Cybernetics, Part C: Applications and Reviews,
+  {IEEE} Transactions on}, 37(3):311--324, 2007.
+
+\bibitem{yang_gesture_1994}
+J.~Yang, Y.~Xu, and C.~S. Chen.
+\newblock Gesture interface: Modeling and learning.
+\newblock In {\em Robotics and Automation, 1994. Proceedings., 1994 {IEEE}
+  International Conference on}, pages 1747--1752, 1994.
+
+\bibitem{tanguay_jr_hidden_1995}
+D.~O. Tanguay~Jr.
+\newblock {\em Hidden markov models for gesture recognition}.
+\newblock PhD thesis, Massachusetts Institute of Technology, 1995.
+
+\end{thebibliography}
