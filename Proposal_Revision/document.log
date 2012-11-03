@@ -1,7 +1,8 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.10.20)  29 OCT 2012 23:36
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.10.20)  3 NOV 2012 06:39
 entering extended mode
 **document.tex
-("C:\Users\koolkid\Course Work\6601- AI\Project2\Proposal\document.tex"
+("C:\Users\koolkid\Course Work\6601- AI\Project2\Proposal_Revision\document.tex
+"
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -251,7 +252,8 @@ Excluding comment 'comment')
 (C:\Users\koolkid\AppData\Roaming\MiKTeX\2.9\tex\latex\titlesec\block.tss
 File: block.tss 2011/12/15
 )
-("C:\Users\koolkid\Course Work\6601- AI\Project2\Proposal\document.aux")
+("C:\Users\koolkid\Course Work\6601- AI\Project2\Proposal_Revision\document.aux
+")
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 70.
 LaTeX Font Info:    ... okay on input line 70.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 70.
@@ -265,8 +267,7 @@ LaTeX Font Info:    ... okay on input line 70.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 70.
 LaTeX Font Info:    ... okay on input line 70.
 LaTeX Font Info:    Try loading font information for T1+pplx on input line 70.
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1pplx.fd"
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1pplx.fd"
 File: t1pplx.fd 2004/09/06 font definitions for T1/pplx.
 )
 \big@size=\dimen156
@@ -324,56 +325,56 @@ Package caption Info: End \AtBeginDocument code.
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplx/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
-LaTeX Font Info:    Try loading font information for OT1+pplx on input line 86.
+LaTeX Font Info:    Try loading font information for OT1+pplx on input line 94.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1pplx.fd"
 File: ot1pplx.fd 2004/09/06 font definitions for OT1/pplx.
 )
-LaTeX Font Info:    Try loading font information for OML+zplm on input line 86.
+LaTeX Font Info:    Try loading font information for OML+zplm on input line 94.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omlzplm.fd"
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMS+zplm on input line 86.
+LaTeX Font Info:    Try loading font information for OMS+zplm on input line 94.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omszplm.fd"
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMX+zplm on input line 86.
+LaTeX Font Info:    Try loading font information for OMX+zplm on input line 94.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omxzplm.fd"
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
-LaTeX Font Info:    Try loading font information for OT1+zplm on input line 86.
+LaTeX Font Info:    Try loading font information for OT1+zplm on input line 94.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1zplm.fd"
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
-)
-("C:\Users\koolkid\Course Work\6601- AI\Project2\Proposal\document.bbl")
-[1
+) [1
 
 {C:/Users/koolkid/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-("C:\Users\koolkid\Course Work\6601- AI\Project2\Proposal\document.aux") ) 
+("C:\Users\koolkid\Course Work\6601- AI\Project2\Proposal_Revision\document.bbl
+") [2]
+("C:\Users\koolkid\Course Work\6601- AI\Project2\Proposal_Revision\document.aux
+") ) 
 Here is how much of TeX's memory you used:
- 4555 strings out of 494045
- 72459 string characters out of 3148380
- 178144 words of memory out of 3000000
+ 4547 strings out of 494045
+ 72483 string characters out of 3148380
+ 162144 words of memory out of 3000000
  7610 multiletter control sequences out of 15000+200000
- 38516 words of font info for 179 fonts, out of 3000000 for 9000
+ 38070 words of font info for 173 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 36i,7n,40p,262b,332s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/P
-rogram Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Users/koolkid/AppDa
-ta/Roaming/MiKTeX/2.9/fonts/type1/public/fpl/fplrc8a.pfb><C:/Program Files/MiKT
-eX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
-ype1/urw/palatino/uplri8a.pfb>
-Output written on document.pdf (1 page, 54314 bytes).
+ 36i,7n,40p,629b,332s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Users/kool
+kid/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/fpl/fplrc8a.pfb><C:/Program F
+iles/MiKTeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.
+9/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on document.pdf (2 pages, 57209 bytes).
 PDF statistics:
- 19 PDF objects out of 1000 (max. 8388607)
+ 22 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  28673 words of extra memory for PDF output out of 29859 (max. 10000000)
 

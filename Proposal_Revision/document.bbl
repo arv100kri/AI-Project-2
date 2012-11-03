@@ -1,15 +1,15 @@
 \begin{thebibliography}{1}
 
-\bibitem{nielsen_noncommand_1993}
-J.~Nielsen.
-\newblock Noncommand user interfaces.
-\newblock {\em Communications of the {ACM}}, 36(4):83--99, 1993.
-
 \bibitem{mitra_gesture_2007}
 S.~Mitra and T.~Acharya.
 \newblock Gesture recognition: A survey.
 \newblock {\em Systems, Man, and Cybernetics, Part C: Applications and Reviews,
   {IEEE} Transactions on}, 37(3):311--324, 2007.
+
+\bibitem{nielsen_noncommand_1993}
+J.~Nielsen.
+\newblock Noncommand user interfaces.
+\newblock {\em Communications of the {ACM}}, 36(4):83--99, 1993.
 
 \bibitem{yang_gesture_1994}
 J.~Yang, Y.~Xu, and C.~S. Chen.
@@ -21,5 +21,11 @@ J.~Yang, Y.~Xu, and C.~S. Chen.
 D.~O. Tanguay~Jr.
 \newblock {\em Hidden markov models for gesture recognition}.
 \newblock PhD thesis, Massachusetts Institute of Technology, 1995.
+
+\bibitem{zheng2002segmentation}
+Y.~Zheng, H.~Li, and D.~Doermann.
+\newblock The segmentation and identification of handwriting in noisy document
+  images.
+\newblock {\em Document Analysis Systems V}, pages 95--105, 2002.
 
 \end{thebibliography}
