@@ -98,18 +98,11 @@ However, any system driven by gestures is intuitive and more effective to work w
 when compared to the traditional command-oriented approach \cite{nielsen_noncommand_1993}. In scenarios involving repeatedly doing a set of tasks through a predetermined sequence of menus, clicks and dialog windows, a gesture-based paradigm of interaction with the system would provide a refreshing alternative to the user. In addition, if the system is robust in identifying the gestures with a high degree of accuracy, a gesture-based interface will be a more accessible way for people with conditions like Carpal-Tunnel to control the system.
 
 In our proposed system, the user draws a continuous sequence of gestures using a mouse. The system recognizes each gesture in the sequence 
-by matching against a trained gesture database. Once a gesture has been identified, an action associated with it is performed. However, if an unknown gesture is encountered, the user can add it to the training database alongwith an associated action.This system provides a capability to queue actions for sequential execution, eliminating the need for a user to alternate between providing input and waiting for an action to be completed, saving scarce time and resources. This is one of the primary benefits of our system, in addition to the previously mentioned potential ways to utilize it.
+by matching against a trained gesture database. Once a gesture has been identified, an action associated with it is performed. However, if an unknown gesture is encountered, the user can add it to the training database along with an associated action. This system provides a capability to queue actions for sequential execution, eliminating the need for a user to alternate between providing input and waiting for an action to be completed, saving scarce time and resources. This is one of the primary benefits of our system, in addition to the previously mentioned potential ways to utilize it. A direct as well as critical societal application of our project is to recognize and interpret gang sign gestures, which can then be used by the police to prevent and/or reduce urban violence.
 
 %------------------------------------------------
 %How are/where are you references deficient
 \section{Related Work}
-
-Mitra and Acharya, in their survey on gesture recognition techniques \cite{mitra_gesture_2007}, 
-note that Hidden Markov Models (HMMs) are a popular tool used to 
-accurately recognize gestures in dynamic gesture recognition problems. 
-Additionally, they present a categorization of gestures,
-defining pantomimes as ``gestures depicting objects or actions, with or without
-accompanying speech''. 
 
 Our work is focused on the problem of using HMMs to
 recognize individual pantomimes embedded in a ``composite pantomime'' (pantomime
@@ -117,6 +110,8 @@ sequence), constructed through simple mouse gestures. % I feel that we might nee
 Yang et al \cite{yang_gesture_1994} discuss work similar to ours, in which they train their HMM model on continuous gestures of varying lengths. Once the system is trained, it is able to identify one or more gestures, based on the models constructed. However, this method has a long training duration and is not robust enough to recognize untrained symbols. Our aim is to exclusively train on individual gestures, which will then be used to identify each gesture in a gesture sequence. 
 
 We propose to base our work on the doctoral thesis of Tanguay\cite{tanguay_jr_hidden_1995}. However, in addition to recognizing individual gestures, we plan to extend his technique to identify multiple gestures.
+
+One of the primary issues in identifying individual gestures in a sequence, is to establish the boundary of each gesture; i.e., the problem of segmentation. There has been work in this, the closest to our problem being identifying segmentation in Chinese handwriting \cite{hong1998segmentation}. However those techniques depend to some extent on the linguistic aspect of the characters, which will not be applicable in the case of general gesture recognition.
 
 %This paragraph definitely requires better wording%
 
@@ -144,7 +139,7 @@ is equal to the maximum of the probabilities between a given window sub-stream
 and each trained HMM. We subsequently iteratively increase the score of the window set 
 by independently increasing or decreasing the duration of each window. The decision to modify each window is determined by comparing the window score in iteration \emph{k} to the score in iteration \emph{k-1}. If the score for a given window increased, the action taken in the previous iteration (either growing or shrinking the window) is repeated; conversely, if the score decreased, the alternate action should be taken. In order to ensure the process terminates, each successive step in the iteration will modify the window duration by a smaller percentage than the previous iteration.
 
-This approach seems to be a good starting point and provides a base on exploring other ideas to tackle the problem of segmentation. In addition to our approach, we also plan to explore strategies used to identify segments in handwriting recognition \cite{zheng2002segmentation} and try to adopt it in our framework.
+As mentioned earlier, since our approach cannot leverage on linguistic features, the above outlined approach makes sense as it avoids using a grammar or any other high-level construct. In addition to our approach, we also plan to explore strategies used in speech recognition to identify a method to eliminate the need to perform segmentation for recognizing each gesture in a multi-gesture sequence \cite{starner1994line}. 
 %Better wording perhaps%
 
 %------------------------------------------------
@@ -160,7 +155,7 @@ that measure recognition accuracy. During the study, the user will complete an
 initial training step an d a subsequent recognition step, consisting of multiple
 phases.
 Recognition phase \emph{n} will consist of the user providing gesture sequences
-of length \emph{n}. We will score the system by computing the proportion of correctly identified individual gestures, where ``correct identification" includes both placement of the individual gesture in each gesture sequence and correct identification of the intended gesture. We will then compare our results for individual gesture recognition with \cite{tanguay_jr_hidden_1995} and those for multiple gesture recognition with \cite{yang_gesture_1994}.
+of length \emph{n}. We will score the system by computing the proportion of correctly identified individual gestures, where ``correct identification" includes both placement of the individual gesture in each gesture sequence and correct identification of the intended gesture. We will then compare our results for individual gesture recognition with \cite{tanguay_jr_hidden_1995} and those for multiple gesture recognition with \cite{yang_gesture_1994}. The effectiveness of the gesture segmentation process will be qualitatively compared with the technique for Chinese character segmentation outlined in \cite{hong1998segmentation}.
 %(Let me call this eval2).
 %Do we need to mention that eval2 will most likely be lower than what was achieved in Yang's paper, but since our method involves significantly smaller training time, that its alright?
 %I guess this is exactly what the review panel wanted right?

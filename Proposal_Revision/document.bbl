@@ -22,10 +22,17 @@ D.~O. Tanguay~Jr.
 \newblock {\em Hidden markov models for gesture recognition}.
 \newblock PhD thesis, Massachusetts Institute of Technology, 1995.
 
-\bibitem{zheng2002segmentation}
-Y.~Zheng, H.~Li, and D.~Doermann.
-\newblock The segmentation and identification of handwriting in noisy document
-  images.
-\newblock {\em Document Analysis Systems V}, pages 95--105, 2002.
+\bibitem{hong1998segmentation}
+C.~Hong, G.~Loudon, Y.~Wu, and R.~Zitserman.
+\newblock Segmentation and recognition of continuous handwriting chinese text.
+\newblock {\em International journal of pattern recognition and artificial
+  intelligence}, 12(02):223--232, 1998.
+
+\bibitem{starner1994line}
+T.~Starner, J.~Makhoul, R.~Schwartz, and G.~Chou.
+\newblock On-line cursive handwriting recognition using speech recognition
+  methods.
+\newblock In {\em Acoustics, Speech, and Signal Processing, 1994. ICASSP-94.,
+  1994 IEEE International Conference on}, pages V--125. IEEE, 1994.
 
 \end{thebibliography}
