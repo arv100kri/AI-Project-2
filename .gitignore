@@ -4,3 +4,13 @@
 *.jar
 *.war
 *.ear
+
+.DS_Store
+
+Proposal_Revision/.project~
+Proposal_Revision/tmp
+
+
+.gitignore~
+
+Proposal_Revision/documen.synctex.gz
