@@ -29,7 +29,7 @@
 
 %\usepackage[hmarginratio=1:1,top=16mm,columnsep=20pt]{geometry} % Document margins
 
-\usepackage[headsep=0.05in,scale=1.0,margin={0.5in,0.5in},columnsep=15pt]{geometry}
+\usepackage[headsep=0.05in,scale=1.0,margin={0.5in,0.5in},columnsep=20pt]{geometry}
 %\oddsidemargin 0.0in %%this makes the odd side margin go to the default of 1inch
 %\evensidemargin 0.0in
 %\headheight 0.5in
@@ -84,22 +84,20 @@
 \section{Problem Statement}
 
 \lettrine[nindent=0em,lines=2]{G}estures, ranging from simple mouse movement to
-complex full-body motion, are a proven form of input in human-centric user
+complex full-body motion, are a common form of input in human-centric user
 interfaces\cite{mitra_gesture_2007}. However, a significant barrier to
-widespread adoption of gesture-centric interfaces is the problem of accurate
-recognition of gestures, both in isolation and in sequence. Gesture recognition,
-frequently involves solving two problems: segmentation of a gesture sequence and
-recognition of individual gestures.
+widespread use of gesture input is the problem of accurate gesture recognition,
+both in isolation and in sequence. Gesture recognition frequently involves
+solving two problems: segmentation of a gesture sequence and recognition of
+individual gestures.
 
-We focus on the problem of temporal segmentation during on-line recognition of a
-sequence of custom mouse gestures. Our approach, described below, captures the
-mouse position over time, and thus is specific to on-line gesture recognition.
-However, our work is a step towards addressing the more general problem of
-off-line recognition of custom symbols, which is an important problem in law
-enforcement, where the United States Federal Bureau of Investigation Safe
-Streets and Gang Unit commonly encounters handwritten communication involving
-custom gestures\cite{lyddane_donald_united_2006}. To our knowledge, this problem
-has not been addressed in the literature.
+We focus on the problem of temporal segmentation of a
+sequence of custom symbols that are created via on-line mouse gestures. Our work
+addresses one part of the larger problem of recognition of custom symbols, which
+is an important problem in law enforcement. The United States Federal Bureau of
+Investigation's Safe Streets and Gang Unit commonly encounters handwritten
+communication involving custom symbols\cite{lyddane_donald_united_2006}. To our
+knowledge, this problem has not been addressed in the literature.
 
 %------------------------------------------------
 %How are/where are you references deficient
