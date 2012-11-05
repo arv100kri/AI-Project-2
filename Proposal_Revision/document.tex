@@ -91,7 +91,13 @@ both in isolation and in sequence. Gesture recognition frequently involves
 solving two problems: segmentation of a gesture sequence and recognition of
 individual gestures.
 
-We focus on the problem of utilizing temporal segmentation to identify individual gestures in a sequence of on-line arbitrary mouse gestures. We strive to be part of a larger endeavor of developing a medium of communication for deaf people who are unable to interact through sign language due to partial paralysis or other similar conditions. Although a mouse may not be the most viable medium for such affected people to use to communicate with others, our work may be suitably enhanced/extended for more accessible mediums of interaction.
+In our work, we focus on the problem of segmenting sequences of user-defined
+symbols created via mouse gestures. We strive to be part of a larger endeavor of
+developing a medium of communication for deaf people who are unable to interact
+through sign language due to partial paralysis or other similar conditions.
+Although a mouse may not be the most viable medium for such affected people to
+use to communicate with others, our work may be suitably enhanced/extended for
+more accessible mediums of interaction.
 
 \begin{comment}
 Our work addresses one part of the larger problem of recognition of custom handwritten symbols, which according to law enforcement is a common medium of communication among gangs\cite{lyddane_donald_united_2006}. To our
@@ -102,17 +108,19 @@ knowledge, designing a general-purpose ``symbol'' recognizer has not been addres
 \section{Related Work}
 
 Yang et al \cite{yang_gesture_1994} present work on recognition of individual
-gestures in continuous gesture sequences, but unlike our work, they train Hidden Markov Models (HMMs)
-on continuous gestures; we view this as a deficiency due to the \emph{a priori}
-definition of gesture sequences. The work most closely
+gestures in continuous gesture sequences, but unlike our work, they train Hidden
+Markov Models (HMMs) on continuous gestures; we view this as a deficiency due to
+the \emph{a priori} definition of gesture sequences. The work most closely
 related to our problem and approach is focused on recognition of Chinese
-handwriting\cite{hong1998segmentation}. Hong et al use an iterative
-segmentation technique that uses whitespace separation to split character
-sequences into individual characters. Their approach is similar to ours, but is intended to be suitable for both off-line and on-line recognition problems, and thus does not
-take advantage of the temporal data that we employ. To our knowledge, there is
-no directly comparable system in the literature; however, we will compare our
-results to those presented by Hong et al\cite{hong1998segmentation} due to the
-similarities between our problem and approach.
+handwriting\cite{hong1998segmentation}. Hong et al use an iterative segmentation
+technique that uses whitespace separation to split character sequences into
+individual characters. Their approach is similar to ours, but their approach is
+intended to be suitable for both off-line and on-line recognition, and
+thus does not take advantage of the temporal data that we employ. To our
+knowledge, there is no directly comparable system in the literature; however, we
+will compare our results to those presented by Hong et
+al\cite{hong1998segmentation} due to the similarities between our problem and
+approach.
 
 %------------------------------------------------
 %Why does your approach make sense

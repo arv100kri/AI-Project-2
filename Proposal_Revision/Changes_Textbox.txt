@@ -7,9 +7,8 @@ Comments
 
 Changes
 --------
-Re-worded the entire problem statement to reflect 
-some of the broad societal impact that a solution to our problem
-may have. Added clear detail to what we are doing, why we are doing 
+Re-wrote the entire problem statement to narrow the focus of our project but also explain how our work is part of a larger problem (with significant
+societal impact) that appears not to be addressed by existing literature. Clarified what we are doing, why we are doing 
 it and why we think it is significant.
 
 
@@ -21,10 +20,7 @@ Comments
 
 Changes
 --------
-Added some references in this section which are more related to the
-work we will do, along with their restrictions and how 
-we propose to build on top of them.
-
+Removed survey paper references. Added references which are closely related to our work and detailed the deficiencies of that work. Also explained how our problem differs and how our proposed work attempts to solve our problem.
 
 Description of what you will implement (1)
 ----------------------------------------------
@@ -34,27 +30,22 @@ Comments
 
 Changes
 --------
-Since our work cannot leverage any high-level liguistic feature, our
-approach of a temporal segmentation technique is a good starting and
+Since our work cannot leverage any high-level linguistic feature, our
+approach of a temporal segmentation technique is a good starting point and
 hence makes sense. We have elaborated on this point in this section 
 of the revised proposal.
-
 
 Description of how you will evaluate the results (0.5)
 ---------------------------------------------------------
 Comments
 --------
-"What are you comaparing against"
+"What are you comparing against"
 "What will your user study be compared against"
 "What is the scoring scale"
 
 Changes
 --------
-Mentioned the established results (and its paper) against which we
-will compare our results. Made the description of the user study
-more concise and clearly mentioned what is our parameter for 
-evaluation (number of gestures correctly identified)
-
+Picked a paper with which to compare results. More succinctly described the user study and clearly mentioned our basis for evaluation (percentage of gestures correctly identified).
 
 References Section (2)
 -------------------------
