@@ -1,0 +1,67 @@
+Problem addressed and its importance (1)
+----------------------------------------------
+Comments
+--------
+"Societal needs could be more clear"
+"Not really convinced more work needs to be done"
+
+Changes
+--------
+Re-worded the entire problem statement to reflect 
+some of the broad societal impact that a solution to our problem
+may have. Added clear detail to what we are doing, why we are doing 
+it and why we think it is significant.
+
+
+Related Work in this area (1)
+----------------------------------------------
+Comments
+--------
+"How are/ where are your references deficient"
+
+Changes
+--------
+Added some references in this section which are more related to the
+work we will do, along with their restrictions and how 
+we propose to build on top of them.
+
+
+Description of what you will implement (1)
+----------------------------------------------
+Comments
+--------
+"Why does your approach make sense"
+
+Changes
+--------
+Since our work cannot leverage any high-level liguistic feature, our
+approach of a temporal segmentation technique is a good starting and
+hence makes sense. We have elaborated on this point in this section 
+of the revised proposal.
+
+
+Description of how you will evaluate the results (0.5)
+---------------------------------------------------------
+Comments
+--------
+"What are you comaparing against"
+"What will your user study be compared against"
+"What is the scoring scale"
+
+Changes
+--------
+Mentioned the established results (and its paper) against which we
+will compare our results. Made the description of the user study
+more concise and clearly mentioned what is our parameter for 
+evaluation (number of gestures correctly identified)
+
+
+References Section (2)
+-------------------------
+Comments
+--------
+<None>
+
+Changes
+--------
+<None>
