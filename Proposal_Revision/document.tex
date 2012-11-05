@@ -113,48 +113,44 @@ Yang et al \cite{yang_gesture_1994} present work on recognition of individual
 gestures in continuous gesture sequences, but unlike our work, they train Hidden
 Markov Models (HMMs) on continuous gestures; we view this as a deficiency due to
 the \emph{a priori} definition of gesture sequences. The work most closely
-related to our problem and approach is focused on recognition of Chinese
+related to ours is focused on recognition of Chinese
 handwriting\cite{hong1998segmentation}. Hong et al use an iterative segmentation
 technique that uses whitespace separation to split character sequences into
 individual characters. Their approach is similar to ours, but their approach is
 intended to be suitable for both off-line and on-line recognition. As a result,
 their approach does not take advantage of the temporal data that we employ. To our
-knowledge, there is no directly comparable system in the literature. However, we
-will compare our results to those presented by Hong et
-al\cite{hong1998segmentation} due to the similarities between our problem and
-approach.
+knowledge, there is no directly comparable system in the literature.
 
 %------------------------------------------------
 %Why does your approach make sense
 \section{Proposed Implementation}
 
-Our problem is segmentation of user-defined gestures. As a result, we
-cannot leverage grammar or other linguistic features, as was done successfully
-by Starner et al\cite{starner1994line}. Additionally, we cannot
-assume the existence of any markers that separate gestures, as is typically found in Chinese
-writing\cite{hong1998segmentation}. As a result, we employ an approach based on
-an efficient ``search" over the space of segmented gesture sequences, aiming to
-find the most accurate gesture segmentation.
-
-We will build upon the mouse gesture recognition system developed by
+Because our problem is segmentation of user-defined gestures, we cannot leverage
+grammar or other linguistic features, as was done successfully by Starner et
+al\cite{starner1994line}. Additionally, we cannot assume the existence of any
+markers that separate gestures, as is typically found in Chinese
+writing\cite{hong1998segmentation}. Thus, we employ an approach based on an
+efficient ``search" over the space of temporally segmented gesture sequences,
+aiming to find the most accurate gesture segmentation. We will build upon the
+mouse gesture recognition system developed by
 Tanguay\cite{tanguay_jr_hidden_1995}, which performs on-line recognition of
-individual mouse gestures via HMMs. We will enhance his system by adding a segmentation
-routine that accurately splits a continuous gesture sequence.
+individual mouse gestures via HMMs. We will enhance his system by adding a
+segmentation routine that accurately splits a continuous gesture sequence.
 
 In our approach, we first split the multi-gesture data stream temporally into N
 sub-streams (each corresponding to an individual gesture) of identical duration
-equal to the mean time taken to draw an individual gesture (calculated from the
-training set). The duration of each sub-stream can be conceptualized as a
-``window'' overlaid on the complete data stream; N sub-streams correspond to N
-windows. After configuring the initial ``window set", we calculate a ``window
-set score", which is the mean of all the individual window scores; each window
-score, in turn, is equal to the maximum of the probabilities of a match between
-the window data and each trained HMM. We subsequently iteratively increase the
-window set score by independently increasing or decreasing the duration of each
-window by a delta based on the time variance of gestures in the training set. If
-the window score increased between iterations \emph{k} and \emph{k-1}, we repeat
-the previous action; otherwise, we try the other action. Our routine terminates
-when the delta change reaches zero.
+equal to the mean duration of gestures in the training set. The duration of each
+sub-stream can be conceptualized as a ``window'' overlaid on the complete data
+stream; N sub-streams correspond to N windows. After configuring the initial
+``window set", we calculate a ``window set score", which is the mean of all the
+individual window scores; each window score, in turn, is equal to the maximum of
+the probabilities of a match between the window data and each trained HMM. We
+subsequently iteratively increase the window set score by independently
+increasing or decreasing the duration of each window by a delta based on the
+time variance of gestures in the training set. If the window score increased
+between iterations \emph{k} and \emph{k-1}, we repeat the previous action;
+otherwise, we try the alternate action. Our routine terminates when the delta change
+reaches zero.
 
 %------------------------------------------------
 %1. What are you comparing against
@@ -162,12 +158,16 @@ when the delta change reaches zero.
 %3. What is the scoring scale
 \section{Proposed Evaluation}
 
-We propose to evaluate our routine by measuring the success rate for segmenting
-a gesture sequence into the correct gestures. We define the success rate as the
-percentage of correctly identified individual gestures. As noted above, our problem
-and segmentation routine is comparable with the work completed by Hong et
-al\cite{hong1998segmentation}. As a result, we will compare our success rates
-with their published results.
+Our approach consists of a segmentation routine, which is designed to be
+resilient to temporal variances in the input gesture sequence, and a HMM-based
+recognition routine, which is used to identify individual gestures. We propose
+to evaluate both the recognition success rate, defined as the percentage of
+correctly identified individual gestures, and the limitations on temporal
+variance for a correctly segmented gesture sequence. Because our problem and
+segmentation approach is comparable with the work by Hong et
+al\cite{hong1998segmentation}, we will compare our success rates with their
+results, and quantify the maximum temporal variance for which segmentation is
+successful.
 
 To avoid author bias during evaluation, we will conduct a micro-study involving
 one user. The user will arbitrarily create gesture sequences of
@@ -179,6 +179,7 @@ the success rate of our segmentation routine.
 \section{References}
 
 \begin{spacing}{0.9}
+%\scalefont{0.9}
 \bibliographystyle{unsrt}	%I use unsrt so that the bib items appear in the order of citing
 %\bibliography{myrefs}
 \begingroup
@@ -186,6 +187,7 @@ the success rate of our segmentation routine.
 \bibliography{myrefs}
 \endgroup
 \end{spacing}
+%\normalsize
 
 \end{multicols}
 \end{document}
