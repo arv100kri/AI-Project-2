@@ -8,8 +8,7 @@ Comments
 Changes
 --------
 Re-wrote the entire problem statement to narrow the focus of our project but also explain how our work is part of a larger problem (with significant
-societal impact) that appears not to be addressed by existing literature. Clarified what we are doing, why we are doing 
-it and why we think it is significant.
+societal impact) that appears not to be addressed by existing literature. Clarified what we are doing, why we are doing it and why we think it is significant.
 
 
 Related Work in this area (1)
@@ -20,7 +19,7 @@ Comments
 
 Changes
 --------
-Removed survey paper references. Added references which are closely related to our work and detailed the deficiencies of that work. Also explained how our problem differs and how our proposed work attempts to solve our problem.
+Removed survey paper references. Added references which are closely related to our work and detailed the deficiencies of that work. Also explained how our problem and proposed approach differs.
 
 Description of what you will implement (1)
 ----------------------------------------------
@@ -32,8 +31,7 @@ Changes
 --------
 Since our work cannot leverage any high-level linguistic feature, our
 approach of a temporal segmentation technique is a good starting point and
-hence makes sense. We have elaborated on this point in this section 
-of the revised proposal.
+hence makes sense. We have elaborated this point in this section.
 
 Description of how you will evaluate the results (0.5)
 ---------------------------------------------------------
@@ -45,7 +43,7 @@ Comments
 
 Changes
 --------
-Picked a paper with which to compare results. More succinctly described the user study and clearly mentioned our basis for evaluation (percentage of gestures correctly identified).
+Picked a paper with which to compare results. Also, we succinctly described the user study and clearly mentioned our basis for evaluation (percentage of gestures correctly identified).
 
 References Section (2)
 -------------------------
