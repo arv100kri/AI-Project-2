@@ -19,7 +19,7 @@ Comments
 
 Changes
 --------
-Removed survey paper references. Added references which are closely related to our work and detailed the deficiencies of that work. Also explained how our problem and proposed approach differs.
+Removed survey paper references. Added references which are closely related to our work and detailed the deficiencies of that work. Also explained how our problem and proposed approach differs from the related work.
 
 Description of what you will implement (1)
 ----------------------------------------------
