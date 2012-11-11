@@ -11,6 +11,7 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -92,9 +93,12 @@ public class MainApp extends JFrame {
 				}
 			}
 			if (e.getSource() == recognizeBtn) {
-				GestureLikelihoodContainer[] rankOrder = oprMed.recognizeGesture(dcpVerify.getCapturedRawFeature());
-				String bestMatchGesture = rankOrder[0].getGesture();
-				status.setText("Best Match Gesture  " + bestMatchGesture);
+				GestureLikelihoodContainer[] sequence = oprMed.iterativeSegmentation(dcpVerify.getCapturedRawFeature());
+				status.setText("Best Gesture sequence match: " + Arrays.toString(sequence));
+				System.out.println("Best Gesture sequence match: " + Arrays.toString(sequence));
+//				GestureLikelihoodContainer[] rankOrder = oprMed.recognizeGesture(dcpVerify.getCapturedRawFeature());
+//				String bestMatchGesture = rankOrder[0].getGesture();
+//				status.setText("Best Match Gesture  " + bestMatchGesture);
 			}
 
 		}

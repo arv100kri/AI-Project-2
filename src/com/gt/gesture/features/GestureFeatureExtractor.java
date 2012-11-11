@@ -39,7 +39,7 @@ public class GestureFeatureExtractor {
 	private double yMax;
 	private Point center;
 	// private int[] chainCodeOfAngles;
-	private int SAMPLE_PER_FRAME = 3;
+	public static final int SAMPLE_PER_FRAME = 3;
 	private int CHAIN_CODE_NUM_DIRECTIONS = 16;
 	private double[] framed_curTime;
 	private Point[] framed_drawPoint;
@@ -82,15 +82,15 @@ public class GestureFeatureExtractor {
 	private void framing() {
 		//
 		int totalSample = inputRawFeature.getCurTime().length;
-		int framedSample = totalSample / getSAMPLE_PER_FRAME();
-		framedSample = framedSample - framedSample % getSAMPLE_PER_FRAME();
+		int framedSample = totalSample / SAMPLE_PER_FRAME;
+		//framedSample = framedSample - framedSample % getSAMPLE_PER_FRAME();
 		framed_curTime = new double[framedSample];
 		framed_drawPoint = new Point[framedSample];
 		for (int i = 0; i < framedSample; i++) {
-			framed_curTime[i] = inputRawFeature.getCurTime()[i * getSAMPLE_PER_FRAME()];
-			framed_drawPoint[i] = inputRawFeature.getDrawPoint()[i * getSAMPLE_PER_FRAME()];
+			framed_curTime[i] = inputRawFeature.getCurTime()[i * SAMPLE_PER_FRAME];
+			framed_drawPoint[i] = inputRawFeature.getDrawPoint()[i * SAMPLE_PER_FRAME];
 		}
-		framedSamples = totalSample / getSAMPLE_PER_FRAME();
+		framedSamples = totalSample / SAMPLE_PER_FRAME;
 		// define vars, with changed size after frameing
 		locationRelativeToCG = new double[framedSamples];
 		distanceBetweenSuccessivePts = new double[framedSamples];
@@ -251,7 +251,7 @@ public class GestureFeatureExtractor {
 
 	private void composeFeatureVector() {
 		// location, distance,angleCG,angleSucc,Velocity.....
-		System.out.println("Composing...");
+//		System.out.println("Composing...");
 		extractedFeature = new GestureFeature[framedSamples - 1];
 		for (int i = 0; i < extractedFeature.length; i++) {
 			extractedFeature[i] = new GestureFeature();
@@ -300,6 +300,7 @@ public class GestureFeatureExtractor {
 		return extractedFeature;
 	}
 
+	/*
 	public int getSAMPLE_PER_FRAME() {
 		return SAMPLE_PER_FRAME;
 	}
@@ -307,6 +308,7 @@ public class GestureFeatureExtractor {
 	public void setSAMPLE_PER_FRAME(int sAMPLE_PER_FRAME) {
 		SAMPLE_PER_FRAME = sAMPLE_PER_FRAME;
 	}
+	*/
 
 	public int getCHAIN_CODE_NUM_DIRECTIONS() {
 		return CHAIN_CODE_NUM_DIRECTIONS;

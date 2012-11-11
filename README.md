@@ -20,11 +20,11 @@ src/com/gt/gesture/mouseCapture
 
 src/com/gt/gesture/proxy
   -> GestureLikelihoodContainer.java: Added new class to capture gesture recognition metrics
- -> OperationMediator.java: Use GestureLikelihoodContainer class to rank order HMM matches.
+ -> OperationMediator.java: 1) Use GestureLikelihoodContainer class to rank order HMM matches, 2) added iterativeSegmentation() routine and related methods: rawFeatureSplit, sliceFeature, scanForGesture(), class DurationGestureInfoContainer, calculateTrainingGestureDurationStats() for metrics, 
 
 src/com/gt/hmm/classify/vq
   -> Codebook.java: Removed extraneous console logging statements
   -> CodeBookDictionary.java: Removed extraneous console logging statements
 
 src/com/gt/UI
-  -> MainApp.java: Added Swing worker threads to generate codebook and HMMs in the background
+  -> MainApp.java: 1) Added Swing worker threads to generate codebook and HMMs in the background; 2) Modified recognize button action to call iterative segmentation routine and display the best match of gestures

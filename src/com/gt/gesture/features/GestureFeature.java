@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 /**
  * a single feature vector is a point in K-dim space, here K=6 later it should
- * be conveted to Point
+ * be converted to Point
  * 
  * @author Ganesh
  * 
