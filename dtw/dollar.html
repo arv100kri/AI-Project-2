@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>$1 Recognizer</title>
+	<link href="$1%20Recognizer_files/styles.css" rel="stylesheet" type="text/css">
+	<!--[if IE]><script src="excanvas.js"></script><![endif]-->
+	<script type="text/javascript" src="$1%20Recognizer_files/canvas.js"></script>
+	<script type="text/javascript" src="$1%20Recognizer_files/gentilis-normal-normal.js"></script>
+	<script type="text/javascript" src="$1%20Recognizer_files/dollar.js"></script>
+	<script type="text/javascript" src="$1%20Recognizer_files/shortstraw.js"></script>
+	<script type="text/javascript"><!--
+	    //
+		// Startup
+		//
+		var _isDown, _points, _r, _g, _rc, _addedShape, _result;
+		_addedShape = true; //ignore first shape result
+		function onLoadEvent()
+		{
+			_points = new Array();
+			_r = new DollarRecognizer();
+
+			var canvas = document.getElementById('myCanvas');
+			_g = canvas.getContext('2d');
+			_g.fillStyle = "rgb(0,0,225)";
+			_g.strokeStyle = "rgb(0,0,225)";
+			_g.lineWidth = 3;
+			_g.font = "16px Gentilis";
+			_rc = getCanvasRect(canvas); // canvas rect on page
+			_g.fillStyle = "rgb(255,255,136)";
+			_g.fillRect(0, 0, _rc.width, 20);
+
+			_isDown = false;
+		}
+		function getCanvasRect(canvas)
+		{
+			var w = canvas.width;
+			var h = canvas.height;
+
+			var cx = canvas.offsetLeft;
+			var cy = canvas.offsetTop;
+			while (canvas.offsetParent != null)
+			{
+				canvas = canvas.offsetParent;
+				cx += canvas.offsetLeft;
+				cy += canvas.offsetTop;
+			}
+			return {x: cx, y: cy, width: w, height: h};
+		}
+		function getScrollY()
+		{
+			var scrollY = 0;
+			if (typeof(document.body.parentElement) != 'undefined')
+			{
+				scrollY = document.body.parentElement.scrollTop; // IE
+			}
+			else if (typeof(window.pageYOffset) != 'undefined')
+			{
+				scrollY = window.pageYOffset; // FF
+			}
+			return scrollY;
+		}
+		//
+		// Mouse Events
+		//
+		function mouseDownEvent(x, y)
+		{
+			document.onselectstart = function() { return false; } // disable drag-select
+			document.onmousedown = function() { return false; } // disable drag-select
+			_isDown = true;
+			x -= _rc.x;
+			y -= _rc.y - getScrollY();
+			if (_points.length > 0)
+				_g.clearRect(0, 0, _rc.width, _rc.height);
+			_points.length = 1; // clear
+			_points[0] = new Point(x, y);
+			drawText("Recording unistroke...");
+			_g.fillRect(x - 4, y - 3, 9, 9);
+		}
+		function mouseMoveEvent(x, y)
+		{
+			if (_isDown)
+			{
+				x -= _rc.x;
+				y -= _rc.y - getScrollY();
+				_points[_points.length] = new Point(x, y); // append
+				drawConnectedPoint(_points.length - 2, _points.length - 1);
+			}
+		}
+		function mouseUpEvent(x, y)
+		{
+			document.onselectstart = function() { return true; } // enable drag-select
+			document.onmousedown = function() { return true; } // enable drag-select
+			if (_isDown)
+			{
+				_isDown = false;
+				if (_points.length >= 10)
+				{
+					//var result = _r.Recognize(_points, document.getElementById('useProtractor').checked);
+					//var match = _r.strokeSimilarity(_points, document.getElementById('useProtractor').checked);
+					//var result = _r.multiRecognize(_points, document.getElementById('useProtractor').checked);
+					if ((!_addedShape) && (_result.Name !== "Unknown!") && (_result.length !== 0)) {
+						_r.LearnMatch(_result);
+					}
+					var training = document.getElementById('training').checked;
+					if (training) {
+						_result = _r.DTW(_points);
+						if (_result.length === 0) {
+							_result = new Result("Unknown!", 0);
+						} else {
+							_result = _result[0];
+						}
+					} else {
+						_result = _r.SegmentationAnalysis(_points);
+						if (_result.length === 0) {
+							_result = new Result("Unknown!", 0);
+						} else {
+							_result = _result[0];
+						}
+					}
+					_addedShape = false;
+					drawText("Result: " + _result.Name + " (" + round(_result.Score,2) + ").");
+				}
+				else // fewer than 10 points were inputted
+				{
+					drawText("Too few points made. Please try again.");
+				}
+			}
+		}
+		function drawText(str)
+		{
+			_g.fillStyle = "rgb(255,255,136)";
+			_g.fillRect(0, 0, _rc.width, 20);
+			_g.fillStyle = "rgb(0,0,255)";
+			_g.fillText(str, 1, 14);
+		}
+		function drawConnectedPoint(from, to)
+		{
+			_g.beginPath();
+			_g.moveTo(_points[from].X, _points[from].Y);
+			_g.lineTo(_points[to].X, _points[to].Y);
+			_g.closePath();
+			_g.stroke();
+		}
+		function round(n, d) // round 'n' to 'd' decimals
+		{
+			d = Math.pow(10, d);
+			return Math.round(n * d) / d
+		}
+		//
+		// Unistroke Adding and Clearing
+		//
+		function onClickAddExisting()
+		{
+			if (_points.length >= 10)
+			{
+				var unistrokes = document.getElementById('unistrokes');
+				var name = unistrokes[unistrokes.selectedIndex].value;
+				var num = _r.AddGesture(name, _points);
+				_addedShape = true;
+				drawText("\"" + name + "\" added. Number of \"" + name + "\"s defined: " + num + ".");
+			}
+		}
+		function onClickAddCustom()
+		{
+			var name = document.getElementById('custom').value;
+			if (_points.length >= 10 && name.length > 0)
+			{
+				var num = _r.AddGesture(name, _points);
+				drawText("\"" + name + "\" added. Number of \"" + name + "\"s defined: " + num + ".");
+			}
+		}
+		function onClickCustom()
+		{
+			document.getElementById('custom').select();
+		}
+		function onClickDelete()
+		{
+			var num = _r.DeleteUserGestures(); // deletes any user-defined unistrokes
+			alert("All user-defined gestures have been deleted. Only the 1 predefined gesture remains for each of the " + num + " types.");
+		}
+	// -->
+	</script>
+</head>
+<body onload="onLoadEvent()">
+	<div id="Mast">
+		<img style="float: right; margin-top: 0em;" src="$1%20Recognizer_files/1.png" width="280">
+		<p id="heading">$1 Unistroke Recognizer</p>
+		<p>
+		Jacob O. Wobbrock, University of Washington <a style="font-size: 8pt;" href="mailto:Jacob%20O.%20Wobbrock%20%3Cwobbrock@uw.edu%3E?subject=From%20the%20$1%20recognizer%20page">[contact]</a><br>
+		Andrew D. Wilson, Microsoft Research<br>
+		Yang Li, University of Washington<sup>†</sup>
+		</p>
+		<p style="font-size:8pt"><sup>†</sup>Currently at Google.</p>
+	</div>
+	<div id="Content">
+		<p class="subhead">Download</p>
+		<p>$1 Recognizer: <a href="http://depts.washington.edu/aimgroup/proj/dollar/dollar.js">JavaScript</a>, <a href="http://depts.washington.edu/aimgroup/proj/dollar/dollar.zip">C#</a><br>
+		   Dynamic Time Warping: <a href="http://depts.washington.edu/aimgroup/proj/dollar/dtw.zip">C#</a><br>
+		   Rubine Classifier: <a href="http://depts.washington.edu/aimgroup/proj/dollar/rubine.zip">C#</a><br>
+		   Pseudocode: <a href="http://depts.washington.edu/aimgroup/proj/dollar/dollar.pdf">$1</a>, <a href="http://depts.washington.edu/aimgroup/proj/dollar/protractor.pdf">Protractor</a><br>
+		   Unistroke gesture logs: <a href="http://depts.washington.edu/aimgroup/proj/dollar/xml.zip">xml</a>
+		</p>
+
+		<p class="subhead">About</p>
+		<p>
+			The $1 Unistroke Recognizer is a 2-D single-stroke recognizer designed for rapid prototyping of gesture-based
+			user interfaces. In machine learning terms, $1 is an instance-based nearest-neighbor classifier with a Euclidean
+			scoring function, i.e., a geometric template matcher. $1 is an extension of the proportional shape matching
+			approach used in <a href="http://dl.acm.org/citation.cfm?id=1029640">SHARK<sup>2</sup></a>, which itself is
+			an adaptation of <a href="http://dl.acm.org/citation.cfm?id=1664979">Tappert's elastic matching</a> approach
+			with zero look-ahead. Despite its simplicity, $1 requires very few templates to perform well and is only about
+			100 lines of code, making it easy to deploy.
+			An optional enhancement called <a href="http://dl.acm.org/citation.cfm?id=1753654">Protractor</a> improves $1's speed.
+			The <a href="http://depts.washington.edu/aimgroup/proj/dollar/ndollar.html">$N Multistroke Recognizer</a> extends $1 to gestures with multiple strokes.
+			The <a href="http://depts.washington.edu/aimgroup/proj/dollar/pdollar.html">$P Point-Cloud Recognizer</a> is the latest in the dollar family,
+			performing unistroke and multistroke recognition without the combinatoric overhead of $N.
+			The $1 recognizer is distributed under the
+			<a href="http://en.wikipedia.org/wiki/BSD_licenses#3-clause_license_.28.22New_BSD_License.22_or_.22Modified_BSD_License.22.29">New BSD License</a>
+			agreement.
+		</p>
+
+		<p class="subhead">Demo</p>
+		<p>
+			In the demo below, only one unistroke template is loaded for each of the 16 gesture types. You can add additional
+			unistrokes as you wish, and even define your own custom unistrokes.
+			<!-- Gesture image and canvas -->
+			</p><table border="0" cellspacing="10">
+				<tbody><tr>
+					<td valign="top">
+						<img src="$1%20Recognizer_files/unistrokes.gif"><br>
+						<p>
+							</p><form style="font-size:10pt">
+								<input name="search" id="useGSS" checked="checked" type="radio">
+									<span style="font-weight:bold">Use Golden Section Search <i>(original)</i></span>
+								<br>
+								<input name="useProtractor" id="useProtractor" type="radio">
+									<span style="font-weight:bold">Use Protractor <i>(faster)</i></span>
+								<br>
+								<input name="training" id="training" checked="checked" type="checkbox">
+									<span style="font-weight:bold">Training</span>
+																
+							</form>
+						<p></p>
+					</td>
+					<td align="left" valign="top">
+						<p style="margin-bottom:4pt;font-size:10pt"><i>Make strokes on this canvas. If a misrecognition occurs,
+						add the misrecognized unistroke as an example of the intended gesture.</i>
+						</p>
+
+						<canvas id="myCanvas" width="420" height="400" style="background-color:#dddddd" onmousedown="mouseDownEvent(event.clientX, event.clientY)" onmousemove="mouseMoveEvent(event.clientX, event.clientY)" onmouseup="mouseUpEvent(event.clientX, event.clientY)" oncontextmenu="return false;">
+							<span style="background-color:#ffff88;">The &lt;canvas&gt; element is not supported by this browser.</span>
+						</canvas>
+
+						<!-- Editing area below stroking canvas area -->
+						<table style="font-size: 10pt;" border="0" width="420">
+							<tbody><tr>
+								<td align="left" valign="top">Add as example of existing type:</td>
+								<td align="right" valign="top">
+									<select id="unistrokes" style="width:136px" onkeypress="if (event.keyCode == 13) onClickAddExisting()">
+										<option selected="selected" value="triangle">triangle</option>
+										<option value="x">x</option>
+										<option value="rectangle">rectangle</option>
+										<option value="circle">circle</option>
+										<option value="check">check</option>
+										<option value="caret">caret</option>
+										<option value="zig-zag">zig-zag</option>
+										<option value="arrow">arrow</option>
+										<option value="left square bracket">left square bracket</option>
+										<option value="right square bracket">right square bracket</option>
+										<option value="v">v</option>
+										<option value="delete">delete</option>
+										<option value="left curly brace">left curly brace</option>
+										<option value="right curly brace">right curly brace</option>
+										<option value="star">star</option>
+										<option value="pigtail">pigtail</option>
+									</select>
+								</td>
+								<td align="right" valign="top"><input style="width: 64px;" value="  Add   " onclick="onClickAddExisting()" type="button"></td>
+							</tr>
+							<tr>
+								<td align="left" valign="top">Add as example of custom type:</td>
+								<td align="right" valign="top"><input id="custom" style="width: 130px;" value="Type name here..." onclick="onClickCustom()" onkeypress="if (event.keyCode == 13) onClickAddCustom()" type="text"></td>
+								<td align="right" valign="top"><input style="width: 64px;" value="  Add   " onclick="onClickAddCustom()" type="button"></td>
+							</tr>
+							<tr>
+								<td align="left" valign="top">Delete all user-defined gestures:</td>
+								<td align="right" valign="top">&nbsp;</td>
+								<td align="right" valign="top"><input style="width: 64px;" value="Delete" onclick="onClickDelete()" type="button"></td>
+							</tr>
+						</tbody></table>
+						<!-- End of editing area below stroking canvas area -->
+					</td>
+				</tr>
+			</tbody></table>
+		<p></p>
+
+		<p class="subhead">References</p>
+		<p>
+			Wobbrock, J.O., Wilson, A.D. and Li, Y. (2007).
+			<a href="http://faculty.washington.edu/wobbrock/pubs/uist-07.1.pdf">Gestures without libraries, toolkits or training: A $1 recognizer for user interface prototypes.</a>
+			Proceedings of the ACM Symposium on User Interface Software and Technology (UIST '07).
+			Newport, Rhode Island (October 7-10, 2007).
+			New York: ACM Press, pp. 159-168.
+		</p>
+		<p>
+			Li, Y. (2010).
+			<a href="http://dl.acm.org/citation.cfm?id=1753654">Protractor: A fast and accurate gesture recognizer.</a>
+			Proceedings of the ACM Conference on Human Factors in Computing Systems (CHI '10).
+			Atlanta, Georgia (April 10-15, 2010).
+			New York: ACM Press, pp. 2169-2172.
+		</p>
+		<p>
+			Kristensson, P. and Zhai, S. (2004).
+			<a href="http://dl.acm.org/citation.cfm?id=1029640">SHARK<sup>2</sup>: A large vocabulary shorthand writing system for pen-based computers.</a>
+			Proceedings of the ACM Symposium on User Interface Software and Technology (UIST '04).
+			Santa Fe, New Mexico (October 24-27, 2004).
+			New York: ACM Press, pp. 43-52.
+		</p>
+		<p>
+			Tappert, C.C. (1982).
+			<a href="http://dl.acm.org/citation.cfm?id=1664979">Cursive script recognition by elastic matching.</a>
+			IBM Journal of Research and Development 26 (6), pp. 765-771.
+		</p>
+
+		<p class="subhead">$1 By Others</p>
+		<p>
+			</p><ul type="circle">
+				<h4>Reviews</h4>
+				<li><a href="http://blog.makezine.com/2008/11/06/gesture-recognition-for-javasc/">Review of $1</a> by Makezine.com</li>
+
+				<h4>Games</h4>
+				<li><a href="http://powstudios.com/node/5">Mr. Spiff's Revenge</a> by POW Studios
+
+				<h4>Code</h4>
+				</li><li><a href="https://github.com/search?q=dollar+gesture+recognizer&amp;repo=&amp;langOverride=&amp;start_value=1&amp;type=Everything&amp;language=">github repositories</a> (many languages)</li>
+				<li><a href="http://github.com/preble/GLGestureRecognizer">GLGestureRecognizer</a>, Objective-C version for the iPhone by Adam Preble</li>
+				<li><a href="http://www.ketzler.de/2008/12/1-recognizer-for-flash-actionscript/">Flash Actionscript version</a> by <a href="http://www.ketzler.de/">Christoph Ketzler</a> <a style="font-size: 8pt;" href="http://www.ketzler.de/wp-content/uploads/2008/12/dollarflashgestures.zip">[zip]</a></li>
+				<li><a href="http://www.olwal.com/?dollar_java_me">Java ME version</a> by Alex Olwal <a style="font-size: 8pt;" href="http://www.youtube.com/watch?v=ept2Z1UVxfw">[youtube]</a> <a style="font-size: 8pt;" href="http://www.vimeo.com/2874413">[vimeo]</a></li>
+				<li><a href="http://www.olwal.com/?dollar_java_se">Java SE version</a> by Alex Olwal <a style="font-size: 8pt;" href="http://www.csc.kth.se/%7Ealx/downloads/dollar/applet/">[applet]</a></li>
+				<li><a href="https://github.com/DariusMorawiec/OneDollar-Unistroke-Recognizer">Processing version</a> by Darius Morawiec <a style="font-size: 8pt;" href="https://github.com/DariusMorawiec/OneDollar-Unistroke-Recognizer/raw/master/download/OneDollarUnistrokeRecognizer.zip">[zip]</a></li>
+				<li><a href="http://www.openprocessing.org/visuals/?visualID=600">Java version</a> by Norman Papernick <a style="font-size: 8pt;" href="http://depts.washington.edu/aimgroup/proj/dollar/others/java.zip">[zip]</a></li>
+				<li><a href="http://blogs.claritycon.com/kevinmarshall/2008/11/21/beginning-multi-touch-on-windows-7-amp-basic-gesture-recognition/">C# multitouch Win7 version</a> by Kevin Marshall <a style="font-size: 8pt;" href="http://employees.claritycon.com/kmarshall/DollarMultiTouch.zip">[zip]</a></li>
+				<li><a href="http://sleepygeek.org/projects.dollar">Python version</a> by Charlie Von Metzradt <a style="font-size: 8pt;" href="http://depts.washington.edu/aimgroup/proj/dollar/others/python.cvm.zip">[zip]</a></li>
+				<li>Python version by <a href="http://userpages.umbc.edu/%7Eskane/">Shaun K. Kane</a> <a style="font-size: 8pt;" href="http://depts.washington.edu/aimgroup/proj/dollar/others/python.sk.zip">[zip]</a></li>
+				<li>Python version by Mike O'Brien <a style="font-size: 8pt;" href="http://depts.washington.edu/aimgroup/proj/dollar/others/python.mo.zip">[zip]</a></li>
+				<li>C++ version by <a href="http://www-users.cs.umn.edu/%7Ewetzel/">baylor wetzel</a> <a style="font-size: 8pt;" href="http://depts.washington.edu/aimgroup/proj/dollar/others/cpp.bw.zip">[zip]</a></li>
+				<li>C++ version by ishikawa <a style="font-size: 8pt;" href="http://depts.washington.edu/aimgroup/proj/dollar/others/cpp.is.zip">[zip]</a></li>
+				<li><a href="http://i.document.m05.de/?p=550">X3D version</a> by Michael Zoellner  <a style="font-size: 8pt;" href="http://i.document.m05.de/wp-content/uploads/2008/11/jsgestures.zip">[zip]</a></li>
+				<li><a href="http://www.winktoolkit.org/documentation/symbols/wink.ux.GestureRecognizer.html">wink version</a>, webapp toolkit by Jerome Giraud</li>
+
+				<h4>Demos, Papers &amp; Videos</h4>
+				<li><a href="http://jsxgraph.uni-bayreuth.de/%7Ealfred/gestures/">JSXGraph demo</a> by Alfred Wassermann</li>
+				<li><a href="http://www.betriebsraum.de/projects/gestures/">Flash AS3 demo</a> by <a href="http://www.betriebsraum.de/blog/">Felix Raab</a> <a style="font-size: 8pt;" href="http://www.betriebsraum.de/blog/2009/07/21/efficient-gesture-recognition-and-corner-finding-in-as3/">[blog]</a></li>
+				<li><a href="http://hci.stanford.edu/research/paper/">Paper Toolkit</a> by Yeh, Klemmer, and Paepcke</li>
+				<li><a href="http://dl.acm.org/citation.cfm?id=1572741.1572761">Sketch recognition paper</a> by M. Field <i>et al.</i>, <i>Eurographics SBIM 2009</i></li>
+				<li><a href="http://depts.washington.edu/aimgroup/proj/dollar/others/poster.pdf">iPhone poster</a> by Christian Pilz &amp; Stefan Hartmann</li>
+				<li><a href="http://tw.youtube.com/watch?v=wl7fLUs7QX4">Object tracking video</a> by Steven</li>
+				<li><a href="http://www.youtube.com/watch?v=UaKCE8IqG80">$1 testbed video</a> by Gerd Kohlberger</li>
+			</ul>
+		<p></p>
+		<br>
+		<p style="font-size:8pt;text-align:center">Copyright © 2007-2012 Jacob O. Wobbrock</p>
+		<br>
+	</div>
+	
+</body></html>
