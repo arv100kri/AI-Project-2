@@ -1107,7 +1107,7 @@ function DollarRecognizer() // constructor
 			total += result.Score;
 			currentResult.NumScores++;
 			currentResult.Score = total / currentResult.NumScores;
-			console.log(result.Name + " score: " + this.CorrectResults[result.Name].Score);
+			//console.log(result.Name + " score: " + this.CorrectResults[result.Name].Score);
 		}
 		//add new length estimate
 		var pointsResult = this.LengthResults[result.Name];
@@ -1116,7 +1116,7 @@ function DollarRecognizer() // constructor
 			total += result.OrigGesturePoints;
 			pointsResult.NumEstimates++;
 			pointsResult.Length = total / pointsResult.NumEstimates;
-			console.log(result.Name + " length: " + this.LengthResults[result.Name].Length);
+			//console.log(result.Name + " length: " + this.LengthResults[result.Name].Length);
 		}
 	};
 	

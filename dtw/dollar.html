@@ -100,7 +100,7 @@
 					//var match = _r.strokeSimilarity(_points, document.getElementById('useProtractor').checked);
 					//var result = _r.multiRecognize(_points, document.getElementById('useProtractor').checked);
 					var training = document.getElementById('training').checked;
-					if ((!_addedShape) && (_result.Name !== "Unknown!") && (_result.length !== 0) && training) {
+					if (training && (!_addedShape) && (_result.Name !== "Unknown!") && (_result.length !== 0)) {
 						_r.LearnMatch(_result);
 					}
 					if (training) {
@@ -239,6 +239,7 @@
 		</p>
 		-->
 		<p class="subhead"></p>
+			<h3>Orientation</h3>
 			<p style="font-size:10pt">
 			Start by training unistrokes you are interested in using. To train, simply draw your
 			unistroke of choice. If a mis-recognition occurs, select the intended unistroke
@@ -253,6 +254,16 @@
 			<p style="font-size:10pt">
 			Note that you can perform sequential unistroke gestures. For example, begin with a mouse click (and hold),
 			then draw a triangle and a circle in one sequence, then release the mouse button.
+			</p>
+			<h3>Study Protocol</h3>
+			<p>
+				<ol>
+					<li>Choose 5 gestures you can comfortably draw and would like to use for this study.</li>
+					<li>Recognition: Uncheck the "Training" checkbox. Using your chosen gestures, draw 10 gesture sequences of lengths 1, then 2, then 3 using your chosen gestures. Please don't draw the same gesture consecutively. Please pause after each gesture for data collection.</li>
+					<li>Training: re-check the checkbox. For each of your chosen gestures, select the gesture from the drop-down list, draw the gesture once, and click the "Add" button.</li>
+					<li>Repeat step 2 (recognition).</li>
+					<li>For the remainder of this survey, please alternate training and recognition steps (2 and 3) by training the following number of times on each gesture: 2, 2, 5.</li>  
+				</ol>
 			</p>
 			<!-- Gesture image and canvas -->
 			<table border="0" cellspacing="10">
@@ -397,10 +408,8 @@
 				<li><a href="http://www.youtube.com/watch?v=UaKCE8IqG80">$1 testbed video</a> by Gerd Kohlberger</li>
 			</ul>
 		<p></p>
-		<br>
-		<p style="font-size:8pt;text-align:center">Copyright © 2007-2012 Jacob O. Wobbrock</p>
-		<br>
-		-->
+		<br>-->
+		<p style="font-size:8pt;text-align:center">Unistroke gesture image and original $1 Recognizer source code Copyright (C) 2007-2012, Jacob O. Wobbrock, Andrew D. Wilson and Yang Li. All rights reserved.</p>
 	</div>
 	
 </body></html>
