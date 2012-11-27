@@ -1,0 +1,39 @@
+\begin{thebibliography}{1}
+
+\bibitem{mitra_gesture_2007}
+S.~Mitra and T.~Acharya.
+\newblock Gesture recognition: A survey.
+\newblock {\em Systems, Man, and Cybernetics, Part C: Applications and Reviews,
+  {IEEE} Transactions on}, 37(3):311--324, 2007.
+
+\bibitem{lyddane_donald_united_2006}
+{{Lyddane}, Donald}.
+\newblock United states attorneys' bulletin.
+\newblock Technical report, United States Department of Justice Executive
+  Office for United States Attorneys, May 2006.
+
+\bibitem{yang_gesture_1994}
+J.~Yang, Y.~Xu, and C.~S. Chen.
+\newblock Gesture interface: Modeling and learning.
+\newblock In {\em Robotics and Automation, 1994. Proceedings., 1994 {IEEE}
+  International Conference on}, pages 1747--1752, 1994.
+
+\bibitem{hong1998segmentation}
+C.~Hong, G.~Loudon, Y.~Wu, and R.~Zitserman.
+\newblock Segmentation and recognition of continuous handwriting chinese text.
+\newblock {\em International journal of pattern recognition and artificial
+  intelligence}, 12(02):223--232, 1998.
+
+\bibitem{starner1994line}
+T.~Starner, J.~Makhoul, R.~Schwartz, and G.~Chou.
+\newblock On-line cursive handwriting recognition using speech recognition
+  methods.
+\newblock In {\em Acoustics, Speech, and Signal Processing, 1994. ICASSP-94.,
+  1994 IEEE International Conference on}, pages V--125. IEEE, 1994.
+
+\bibitem{tanguay_jr_hidden_1995}
+D.~O. Tanguay~Jr.
+\newblock Hidden markov models for gesture recognition.
+\newblock Master's thesis, Massachusetts Institute of Technology, 1995.
+
+\end{thebibliography}
