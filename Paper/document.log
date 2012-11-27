@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.10.20)  27 NOV 2012 09:04
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.10.20)  27 NOV 2012 09:06
 entering extended mode
 **document.tex
 ("C:\Users\koolkid\Course Work\6601- AI\Project2\Paper\document.tex"
@@ -963,11 +963,11 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  22407 strings out of 494045
  503281 string characters out of 3148380
- 646750 words of memory out of 3000000
+ 647750 words of memory out of 3000000
  24999 multiletter control sequences out of 15000+200000
  57082 words of font info for 238 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 63i,19n,93p,1257b,2298s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 63i,19n,93p,1258b,2298s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX
  2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/font
@@ -977,7 +977,7 @@ TeX/2.9/fonts/type1/public/fpl/fplrc8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
 ype1/urw/palatino/uplb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palat
 ino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.pf
 b>
-Output written on document.pdf (4 pages, 141346 bytes).
+Output written on document.pdf (4 pages, 141356 bytes).
 PDF statistics:
  52 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
