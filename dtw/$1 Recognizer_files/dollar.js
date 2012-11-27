@@ -164,6 +164,11 @@ function DollarRecognizer() // constructor
 		this.CorrectResults[this.Unistrokes[i].Name] = {Score: 0, NumScores: 0};
 	}
 	
+	this.LengthResults = {};
+	for (var i = 0; i < this.Unistrokes.length; i++) {
+		this.LengthResults[this.Unistrokes[i].Name] = {Length: 0, NumEstimates: 0};
+	}
+	
 	//JDP modify BEGIN
 	this.multiRecognize = function(points, useProtractor)
 	{
@@ -458,13 +463,103 @@ function DollarRecognizer() // constructor
 		return finalResults;
 	};
 	//JDP END
+	this.MinGestureLength = function() {
+		var gestureNames = this.GetGestures();
+		var minLength = 1000000000;
+		var lengthResult;
+		var length;
+		for (var i = 0; i < gestureNames.length; i++) {
+			lengthResult = this.LengthResults[gestureNames[i]];
+			length = lengthResult.Length;
+			if (length < minLength) {
+				minLength = length;
+			}
+		}			
+		
+		return minLength;
+	};
+	
+	//call with args (points, new Array())
+	this.FindAllPossibleMatches = function(points, sequenceOfMatches) {
+		var returnArray = new Array();
+		var resultSeqCopy;
+		var findResult;
+		var rest;
+		var cut;
+		var outMatches = this.FindGestureMatchesInSequence(points);
+		
+		if (outMatches.length > 0) {
+			for (var i = 0; i < outMatches.length; i++) {
+				//TODO JDP draw box at point outMatches[i].SegmentLength
+				cut = new Array();
+				cut.push(points[outMatches[i].SegmentLength-1]);
+				DrawCorners(cut, _g);
+				resultSeqCopy = CopyResultSeq(sequenceOfMatches);
+				resultSeqCopy.push(outMatches[i]);
+				//rest = CopyArrayPart(points, resultSeqCopy.SegmentLength);
+				rest = CopyArrayUntilEnd(points, outMatches[i].SegmentLength);
+				findResult = this.FindAllPossibleMatches(rest, resultSeqCopy);
+				returnArray.push(findResult);
+				return returnArray;
+			}
+		} else {
+			return sequenceOfMatches;
+		}
+	};
+	
+	this.FindGestureMatchesInSequence = function(points) {
+		var possibleGestures = new Array();
+		var gestureNames = this.GetGestures();
+		var lengthResult, length, segment, allResults, filteredResults, match;
+		var skip;
+		var floorLength;
+		var corners;
+		for (var i = 0; i < gestureNames.length; i++) {
+			match = null;
+			skip = false;
+			lengthResult = this.LengthResults[gestureNames[i]];
+			
+			if ((lengthResult.Length === 0) || (lengthResult.Length > points.length)) { skip = true; }
+
+			if (!skip) {
+				//cut off portion equal to lengthResult and do a match
+				floorLength = Math.floor(lengthResult.Length);
+				segment = CopyArrayPart(points, floorLength);
+				
+				allResults = this.DTWByStroke(segment, gestureNames[i]);
+				if (allResults.length > 0) {
+					corners = new Array();
+					corners.push(points[floorLength-1]);
+					//DrawCorners(corners, _g);
+				}
+				filteredResults = this.ThreshholdFilter(allResults, 1.2);
+				
+				if (filteredResults.length > 0) {
+					match = filteredResults[0];
+					match.SegmentLength = floorLength;
+					possibleGestures.push(match);
+				}
+				
+			}
+		}
+		
+		return possibleGestures;
+	};
+	
 	this.IncrementalSearch = function(points, gestures) {
-		if (points.length < 10) { //minimum gesture length
+		//1. Determine min_gesture_length
+		//2. Verify points.length > min_gesture_length
+		//3. find all matching gestures using average lengths, and thresholding
+		//4. rinse and repeat until points.length < min_gesture_length
+		
+		var minGestureLength = this.MinGestureLength(); 
+		
+		if (points.length < minGestureLength) { //minimum gesture length
 			return new Array();
 		}
 		var results;
 		var identifiedGestures, windowSize, segment, next; 
-		identifiedGestures = this.FindGestures(points);
+		identifiedGestures = this.FindGestureMatchesInSequence(points);
 		for (var i = 0; i < identifiedGestures.length; i++) {
 			windowSize = identifiedGestures[i].WindowSize;
 			segment = CopyArrayUntilEnd(points, windowSize);
@@ -541,7 +636,7 @@ function DollarRecognizer() // constructor
 			windowSize = (windowSize > length) ? length : windowSize;  
 			path = CopyPointArray(windowSize, points);
 			allResults = this.DTW(path);
-			filteredResults = this.ThreshholdFilter(allResults);
+			filteredResults = this.ThreshholdFilter(allResults, 1.3);
 			this.AddNewResults(filteredResults, finalResults, windowSize);
 		}
 		
@@ -608,13 +703,13 @@ function DollarRecognizer() // constructor
 		}
 	};
 	//JDP BEGIN filter out results worse than threshold
-	this.ThreshholdFilter = function(allResults) {
+	this.ThreshholdFilter = function(allResults, mult) {
 		var filteredResults = new Array();
 		var result, thresholdResult;
 		for (var i = 0; i < allResults.length; i++) {
 			result =  allResults[i];
 			thresholdResult = this.CorrectResults[result.Name];
-			if (result.Score < thresholdResult.Score * 1.3) { //JDP may be too strict... tweak this
+			if (result.Score < thresholdResult.Score * mult) { //JDP may be too strict... tweak this
 				filteredResults[filteredResults.length] = result;
 			}
 		}
@@ -657,6 +752,7 @@ function DollarRecognizer() // constructor
 			}
 			allResults[allResults.length] = new Result(gestureNames[i], minDistance);
 			allResults[allResults.length-1].GestureIndex = gestureIndex;
+			allResults[allResults.length-1].OrigGesturePoints = points.length;
 		}
 
 		allResults.sort(DescendingResultSorterFunction);
@@ -665,6 +761,191 @@ function DollarRecognizer() // constructor
 		return allResults;
 	};
 	//JDP END
+
+	//JDP BEGIN
+	this.DTWForDistanceSegmentation = function(points) {
+		var index, newPoints, results;
+		var done = false;
+		var gestures = new Array();
+		var curPoints = points;
+		var corners, resampledPoints, lastPoint;
+		while (!done) {
+			results = this.DTWForDistance(curPoints);
+			if (results.length > 0) {
+				corners = new Array();
+				resampledPoints = Resample(curPoints, NumPoints);
+				lastPoint = resampledPoints[results[0].CacheNumberOfPoints-1];
+				corners.push(lastPoint);
+				DrawCorners(corners, _g);
+				index = this.FindClosestPoint(curPoints, lastPoint);
+				curPoints = CopyArrayUntilEnd(curPoints, index);
+				gestures.push(results[0]);
+			} else {
+				done = true;
+			}
+		}
+		return gestures;
+	};
+	
+	//JDP END
+	//JDP BEGIN
+	this.FindClosestPoint = function(points, point) {
+		//search through points for the minimum distance to point
+		var minDistance = 1000000000;
+		var index = 0;
+		var distance;
+		for (var i = 0 ; i < points.length; i++) {
+			distance = Distance(points[i], point);
+			if (distance < minDistance) {
+				minDistance = distance;
+				index = i;
+			}
+		}
+		return index;
+	};
+	//JDP END
+	//JDP BEGIN DTW distance measurement as similarity test....
+	this.DTWForDistance = function(points) {
+		if (points.length < 10) { //this is to work around a bug in function Resample, which loops infinitely when d = 0
+			return new Array();
+		}
+		var pointsCopy = null;
+		var origPointsCopy = null;
+		var gestureNames = this.GetGestures();
+		var minDistance = 1000000000;
+		var distance;
+		var allResults = new Array();
+		var pointsScaled, pointsAtOrigin, templateBox, templatePointsAtOrigin, pointsBox, templateScaled;
+		var I, resampledPoints, resampledUnistroke, pointDistance, numberOfPoints, segment;
+		var cacheNumberOfPoints;
+		var gestureIndex;
+		var optimizedResult;
+		for (var i = 0; i < gestureNames.length; i++) {
+			targetStrokes = this.GetStrokesByName(gestureNames[i]);
+			//targetStrokes = this.GetStrokesByName(gestureName);
+			//templateStroke = targetStrokes[0]["stroke"];
+			minDistance = 1000000000;
+			for (var j = 0; j < targetStrokes.length; j++) {
+				templateStroke = targetStrokes[j]["stroke"];
+				
+				//calculate distance of the unistroke
+				origPointsCopy = CopyArrayPart(templateStroke.OrigPoints, templateStroke.OrigPoints.length);
+				resampledUnistroke = Resample(origPointsCopy, NumPoints);
+				pointsCopy = CopyArrayPart(points, points.length);
+				resampledPoints = Resample(pointsCopy, NumPoints);
+				I = PathLength(resampledUnistroke);
+				I = I * 0.9;
+				//calculate how many points in the points array are needed to get 0.9 * distance
+				if (resampledPoints.length > 1) { //corner case
+					pointDistance = Distance(resampledPoints[resampledPoints.length-1], resampledPoints[resampledPoints.length-2]);
+					numberOfPoints = I / pointDistance;
+					numberOfPoints = Math.floor(numberOfPoints);
+					if ((numberOfPoints <= NumPoints) && (numberOfPoints > 1)) {
+						segment = CopyArrayPart(resampledPoints, numberOfPoints);
+						//translate template to userStroke
+						//var transTemplatePoints = TranslateUnistroke(templateStroke.OrigPoints, points[0]);
+		
+						//templateBox = BoundingBox(templateStroke.OrigPoints);
+						templateBox = BoundingBox(resampledUnistroke);
+						pointsBox = BoundingBox(segment);
+						//pointsScaled = UniformScaleTo(points, templateBox.Height, templateBox.Width);
+						//pointsAtOrigin = TranslateTo(pointsScaled, Origin);
+						pointsAtOrigin = TranslateTo(segment, Origin);
+		
+						templatePointsAtOrigin = TranslateTo(resampledUnistroke, Origin);
+						//distance = DynamicTimeWarp(points, transTemplatePoints);
+						//distance = DynamicTimeWarp(pointsAtOrigin, templateStroke.Points);
+						distance = DynamicTimeWarp(pointsAtOrigin, templatePointsAtOrigin);
+						if (distance < minDistance) {
+							//optimize distance
+							optimizedResult = this.optimizeDistance(distance, numberOfPoints, resampledPoints, templatePointsAtOrigin);
+							//minDistance = distance;
+							minDistance = optimizedResult[0];
+							gestureIndex = targetStrokes[j]["index"];
+							//cacheNumberOfPoints = numberOfPoints;
+							cacheNumberOfPoints = optimizedResult[1];
+						}
+					}
+				}
+			}
+			if (minDistance !== 1000000000) {
+				allResults[allResults.length] = new Result(gestureNames[i], minDistance);
+				allResults[allResults.length-1].GestureIndex = gestureIndex;
+				allResults[allResults.length-1].OrigGesturePoints = points.length;
+				allResults[allResults.length-1].CacheNumberOfPoints = cacheNumberOfPoints;
+			}
+		}
+
+		allResults.sort(DescendingResultSorterFunction);
+		if (allResults.length > 0) {
+			corners = new Array();
+			resampledPoints = Resample(points, NumPoints);
+			corners.push(resampledPoints[allResults[0].CacheNumberOfPoints-1]);
+			DrawCorners(corners, _g);
+		}
+		//console.log(allResults);
+		//return allResults[0];
+		return allResults;
+	};
+	//JDP END
+	//JDP BEGIN
+	this.optimizeDistance = function(distance, numberOfPoints, resampledPoints, templatePointsAtOrigin) {
+	var segment, pointsAtOrigin;
+	var startDistance = distance;
+	var continueTest = true;
+	var backNumberOfPoints = numberOfPoints;
+	var backDistance = startDistance;
+	var testDistance;
+	var testNumberOfPoints = backNumberOfPoints;
+	while (continueTest) {
+		//search backwards...
+		testNumberOfPoints--;
+		if (testNumberOfPoints <= 0) { continueTest = false; } else {
+			segment = CopyArrayPart(resampledPoints, backNumberOfPoints);
+			pointsAtOrigin = TranslateTo(segment, Origin);
+			testDistance = DynamicTimeWarp(pointsAtOrigin, templatePointsAtOrigin);
+			//continue while making progress...
+			if (testDistance < backDistance) { backDistance = testDistance; backNumberOfPoints = testNumberOfPoints; } else { continueTest = false; }
+		}
+	}
+	
+	//search forwards...
+	var forwardNumberOfPoints = numberOfPoints;
+	testNumberOfPoints = forwardNumberOfPoints;
+	var forwardDistance = startDistance;
+	continueTest = true;
+	while (continueTest) {
+		//search backwards...
+		testNumberOfPoints++;
+		if (testNumberOfPoints >= resampledPoints.length) {  continueTest = false; } else {
+			segment = CopyArrayPart(resampledPoints, testNumberOfPoints);
+			pointsAtOrigin = TranslateTo(segment, Origin);
+			testDistance = DynamicTimeWarp(pointsAtOrigin, templatePointsAtOrigin);
+			if (testDistance < forwardDistance) { forwardDistance = testDistance; forwardNumberOfPoints = testNumberOfPoints; } else { continueTest = false; }
+		} 		
+	}
+	
+	var finalDistance, finalNumberOfPoints;
+	
+	if ((forwardDistance < startDistance) && (forwardDistance < backDistance)) {
+		finalDistance = forwardDistance;
+		finalNumberOfPoints = forwardNumberOfPoints;
+	} else if ((backDistance < startDistance) && (backDistance < forwardDistance)) {
+		finalDistance = backDistance;
+		finalNumberOfPoints = backNumberOfPoints;
+	} else {
+		finalDistance = startDistance;
+		finalNumberOfPoints = numberOfPoints;
+	}
+		
+	var returnArray = new Array();
+	returnArray.push(finalDistance);
+	returnArray.push(finalNumberOfPoints);
+	return returnArray;
+		
+	};	
+	//JDP END
+
 	//JDP BEGIN DTW for just one template stroke...
 	this.DTWByStroke = function(points, strokeName) {
 		var gestureNames = this.GetGestures();
@@ -826,7 +1107,16 @@ function DollarRecognizer() // constructor
 			total += result.Score;
 			currentResult.NumScores++;
 			currentResult.Score = total / currentResult.NumScores;
-			console.log(result.Name + ": " + this.CorrectResults[result.Name].Score);
+			console.log(result.Name + " score: " + this.CorrectResults[result.Name].Score);
+		}
+		//add new length estimate
+		var pointsResult = this.LengthResults[result.Name];
+		if (pointsResult !== undefined) { //happens for composite gestures		
+			var total = pointsResult.Length * pointsResult.NumEstimates;
+			total += result.OrigGesturePoints;
+			pointsResult.NumEstimates++;
+			pointsResult.Length = total / pointsResult.NumEstimates;
+			console.log(result.Name + " length: " + this.LengthResults[result.Name].Length);
 		}
 	};
 	
@@ -843,6 +1133,7 @@ function DollarRecognizer() // constructor
 		}
 		if (!found) {
 			this.CorrectResults[name] = {Score: 0, NumScores: 0};
+			this.LengthResults[name] = {Length: 0, NumEstimates: 0};
 		}
 		return num;
 	};
@@ -1074,6 +1365,7 @@ function DescendingResultSorterFunction(a, b) {
 //
 function Resample(points, n)
 {
+	var foo;
 	var I = PathLength(points) / (n - 1); // interval length
 	var D = 0.0;
 	var newpoints = new Array(points[0]);
@@ -1084,10 +1376,15 @@ function Resample(points, n)
 		{
 			var qx = points[i - 1].X + ((I - D) / d) * (points[i].X - points[i - 1].X);
 			var qy = points[i - 1].Y + ((I - D) / d) * (points[i].Y - points[i - 1].Y);
+			//if ((qx == points[i - 1].X) && (qy == points[i - 1].Y)) {
+			//	foo = 1;
+			//} else {
 			var q = new Point(qx, qy);
 			newpoints[newpoints.length] = q; // append new point 'q'
 			points.splice(i, 0, q); // insert 'q' at position i in points s.t. 'q' will be the next i
+			//}
 			D = 0.0;
+			
 		}
 		else D += d;
 	}
@@ -1141,6 +1438,19 @@ function UniformScaleTo(points, vsize, hsize) // non-uniform scale; assumes 2D g
 		newpoints[newpoints.length] = new Point(qx, qy);
 	}
 	return newpoints;
+}
+//JDP END
+//JDP BEGIN
+function CopyResultSeq(sequenceOfMatches) {
+	var result, cur;
+	var returnArray = new Array();
+	for (var i = 0; i < sequenceOfMatches.length; i++) {
+		cur = sequenceOfMatches[i];
+		result = new Result(cur.Name, cur.Score);
+		result.SegmentLength = cur.SegmentLength;
+		returnArray.push(result);
+	}
+	return returnArray;
 }
 //JDP END
 function TranslateTo(points, pt) // translates points' centroid

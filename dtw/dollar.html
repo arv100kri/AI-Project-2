@@ -88,6 +88,7 @@
 		}
 		function mouseUpEvent(x, y)
 		{
+			var testing, msg;
 			document.onselectstart = function() { return true; } // enable drag-select
 			document.onmousedown = function() { return true; } // enable drag-select
 			if (_isDown)
@@ -98,10 +99,10 @@
 					//var result = _r.Recognize(_points, document.getElementById('useProtractor').checked);
 					//var match = _r.strokeSimilarity(_points, document.getElementById('useProtractor').checked);
 					//var result = _r.multiRecognize(_points, document.getElementById('useProtractor').checked);
-					if ((!_addedShape) && (_result.Name !== "Unknown!") && (_result.length !== 0)) {
+					var training = document.getElementById('training').checked;
+					if ((!_addedShape) && (_result.Name !== "Unknown!") && (_result.length !== 0) && training) {
 						_r.LearnMatch(_result);
 					}
-					var training = document.getElementById('training').checked;
 					if (training) {
 						_result = _r.DTW(_points);
 						if (_result.length === 0) {
@@ -109,16 +110,31 @@
 						} else {
 							_result = _result[0];
 						}
+						drawText("Result: " + _result.Name + " (" + round(_result.Score,2) + ").");
 					} else {
-						_result = _r.SegmentationAnalysis(_points);
-						if (_result.length === 0) {
-							_result = new Result("Unknown!", 0);
+						//_result = _r.SegmentationAnalysis(_points);
+						//if (_result.length === 0) {
+						//	_result = new Result("Unknown!", 0);
+						//} else {
+						//	_result = _result[0];
+						//}
+						//testing = _r.FindAllPossibleMatches(_points, new Array());
+						//testing = _r.DTWForDistance(_points);
+						testing = _r.DTWForDistanceSegmentation(_points);
+						console.log(testing);
+						if (testing.length === 0) {
+							msg = "Unknown!";
 						} else {
-							_result = _result[0];
+							msg = "Result: ";
+							for (var i = 0; i < testing.length; i++) {
+								msg += " " + testing[i].Name;
+							}
 						}
+						//drawText("Result: " + _result.Name + " (" + round(_result.Score,2) + ").");
+						drawText(msg);
 					}
 					_addedShape = false;
-					drawText("Result: " + _result.Name + " (" + round(_result.Score,2) + ").");
+					
 				}
 				else // fewer than 10 points were inputted
 				{
@@ -182,6 +198,7 @@
 	</script>
 </head>
 <body onload="onLoadEvent()">
+	<!--
 	<div id="Mast">
 		<img style="float: right; margin-top: 0em;" src="$1%20Recognizer_files/1.png" width="280">
 		<p id="heading">$1 Unistroke Recognizer</p>
@@ -192,7 +209,9 @@
 		</p>
 		<p style="font-size:8pt"><sup>†</sup>Currently at Google.</p>
 	</div>
+	-->
 	<div id="Content">
+		<!--
 		<p class="subhead">Download</p>
 		<p>$1 Recognizer: <a href="http://depts.washington.edu/aimgroup/proj/dollar/dollar.js">JavaScript</a>, <a href="http://depts.washington.edu/aimgroup/proj/dollar/dollar.zip">C#</a><br>
 		   Dynamic Time Warping: <a href="http://depts.washington.edu/aimgroup/proj/dollar/dtw.zip">C#</a><br>
@@ -218,24 +237,40 @@
 			<a href="http://en.wikipedia.org/wiki/BSD_licenses#3-clause_license_.28.22New_BSD_License.22_or_.22Modified_BSD_License.22.29">New BSD License</a>
 			agreement.
 		</p>
-
-		<p class="subhead">Demo</p>
-		<p>
-			In the demo below, only one unistroke template is loaded for each of the 16 gesture types. You can add additional
-			unistrokes as you wish, and even define your own custom unistrokes.
+		-->
+		<p class="subhead"></p>
+			<p style="font-size:10pt">
+			Start by training unistrokes you are interested in using. To train, simply draw your
+			unistroke of choice. If a mis-recognition occurs, select the intended unistroke
+			from the drop-down menu and click "Add".
+			</p>
+			<p style="font-size:10pt">
+			To exit training mode, uncheck the "Training" checkbox. If a mis-recognition occurs
+			when outside of training mode, re-check the checkbox and re-train both the intended gesture
+			and the mis-recognized gesture. For high gesture recognition accuray, consider training
+			5-8 samples of a chosen gesture.
+			</p>
+			<p style="font-size:10pt">
+			Note that you can perform sequential unistroke gestures. For example, begin with a mouse click (and hold),
+			then draw a triangle and a circle in one sequence, then release the mouse button.
+			</p>
 			<!-- Gesture image and canvas -->
-			</p><table border="0" cellspacing="10">
+			<table border="0" cellspacing="10">
 				<tbody><tr>
 					<td valign="top">
 						<img src="$1%20Recognizer_files/unistrokes.gif"><br>
 						<p>
 							</p><form style="font-size:10pt">
-								<input name="search" id="useGSS" checked="checked" type="radio">
+								<input name="search" id="useGSS" checked="checked" type="hidden">
+								<!--
 									<span style="font-weight:bold">Use Golden Section Search <i>(original)</i></span>
 								<br>
-								<input name="useProtractor" id="useProtractor" type="radio">
+								-->
+								<input name="useProtractor" id="useProtractor" type="hidden">
+								<!--
 									<span style="font-weight:bold">Use Protractor <i>(faster)</i></span>
 								<br>
+								-->
 								<input name="training" id="training" checked="checked" type="checkbox">
 									<span style="font-weight:bold">Training</span>
 																
@@ -243,9 +278,11 @@
 						<p></p>
 					</td>
 					<td align="left" valign="top">
+						<!--
 						<p style="margin-bottom:4pt;font-size:10pt"><i>Make strokes on this canvas. If a misrecognition occurs,
 						add the misrecognized unistroke as an example of the intended gesture.</i>
 						</p>
+						-->
 
 						<canvas id="myCanvas" width="420" height="400" style="background-color:#dddddd" onmousedown="mouseDownEvent(event.clientX, event.clientY)" onmousemove="mouseMoveEvent(event.clientX, event.clientY)" onmouseup="mouseUpEvent(event.clientX, event.clientY)" oncontextmenu="return false;">
 							<span style="background-color:#ffff88;">The &lt;canvas&gt; element is not supported by this browser.</span>
@@ -282,18 +319,20 @@
 								<td align="right" valign="top"><input id="custom" style="width: 130px;" value="Type name here..." onclick="onClickCustom()" onkeypress="if (event.keyCode == 13) onClickAddCustom()" type="text"></td>
 								<td align="right" valign="top"><input style="width: 64px;" value="  Add   " onclick="onClickAddCustom()" type="button"></td>
 							</tr>
+							<!--
 							<tr>
 								<td align="left" valign="top">Delete all user-defined gestures:</td>
 								<td align="right" valign="top">&nbsp;</td>
 								<td align="right" valign="top"><input style="width: 64px;" value="Delete" onclick="onClickDelete()" type="button"></td>
 							</tr>
+							-->
 						</tbody></table>
 						<!-- End of editing area below stroking canvas area -->
 					</td>
 				</tr>
 			</tbody></table>
 		<p></p>
-
+		<!--
 		<p class="subhead">References</p>
 		<p>
 			Wobbrock, J.O., Wilson, A.D. and Li, Y. (2007).
@@ -361,6 +400,7 @@
 		<br>
 		<p style="font-size:8pt;text-align:center">Copyright © 2007-2012 Jacob O. Wobbrock</p>
 		<br>
+		-->
 	</div>
 	
 </body></html>
