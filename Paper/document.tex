@@ -21,6 +21,7 @@
 \documentclass[twoside]{article}
 \usepackage{etex}
 \usepackage{pgfplots}
+\usepackage{comment}
 \usepackage{cite} % Better citations
 \usepackage{setspace}
 \usepackage{mathtools}
@@ -91,21 +92,25 @@ enforcement, where a significant concern is recognition of gang symbols in
 graffiti and other forms of hand-written communication. The United States
 Federal Bureau of Investigation's Safe Streets and Gang Unit commonly encounters
 handwritten communication using custom
-gestures\cite{lyddane_donald_united_2006}. The key features of law enforcement's
-gesture identification problem are 1) recognition of previously-identified
-custom symbols, and 2) identification of those symbols within a gesture
-sequence.
+gestures\cite{lyddane_donald_united_2006}. 
+%The key features of law enforcement's
+%gesture identification problem are 1) recognition of previously-identified
+%custom symbols, and 2) identification of those symbols within a gesture
+%sequence. 
+We hope to address such a problem on a much smaller scale in our project, where
+an input gesture sequence, consisting of a set of known gestures,
+is segmented into its individual components, which are then recognized.
+Our objective is to solve this problem without constructing an exhaustive set of training
+data.
 
 Recognizing a sequence of symbols is difficult primarily because of the
 segmentation problem, that is, the problem of analyzing a gesture sequence and
 identifying where each individual gesture begins and ends.
-It is useful to compare the problem we are interested in tackling with similar
-problems. Unlike the problem of letter identification in written languages, the sequence
-of gestures doesn't follow a well-defined grammar. However, similar to the
-problem of letter recognition in cursive handwriting, our gesture sequences have
-no obvious ``breaks'' to demarcate individual gestures. In the next section, we
-review work related to this problem.
-
+Unlike the similar problem of cursive handwriting recognition, the sequence
+of gestures have no well-defined grammar (which English possesses to an extent), and thus cannot be
+leveraged during the process of recognition. Also gesture sequences do not have any obvious 
+``breaks'' to demarcate individual gestures, which makes segmentation more difficult to accurately
+implement.
 %Problem addressed and its importance
 %    ⁃    poor: does not mention problem or does not say why it is important
 %    ⁃    acceptable: problem is tied to societal needs and backed up with reasons
@@ -113,23 +118,19 @@ review work related to this problem.
 
 %------------------------------------------------
 \section{Related Work}
-
-The related work focuses on problems similar to ours, but with some key
-differences. In this section, we review related problems, and the
-approaches taken, in order to compare and contrast each approach with ours.
-
 Yang et al \cite{yang_gesture_1994} present work on recognition of individual
 gestures in continuous gesture sequences containing arbitrary gestures (e.g.,
-digits). The notable difference between their work and ours is the problem
-approach. They train HMMs to recognize continuous gesture sequences defined
-\textit{a priori}, and, because of their use of HMMs, require an intensive
-training period, both of which we see as deficiencies.
+digits), by constructing an exhaustive set of HMMs. They train HMMs to recognize 
+continuous gesture sequences defined \textit{a priori}, and, because of their use 
+of HMMs, require an intensive training period, both of which we see as deficiencies.
 
+\begin{comment}
 Hong et al, in their paper on Chinese character recognition
 \cite{hong1998segmentation}, use a two-level iterative segmentation technique
 that uses whitespace separation to split character sequences into individual
 characters. Their approach does not work for our problem, where gestures are drawn in one
 continuous motion, uninterrupted by white space.
+\end{comment}
 
 Robust individual gesture recognition systems exist, such as the mouse gesture
 recognition system developed by Tanguay\cite{tanguay_jr_hidden_1995}. However,
@@ -149,54 +150,54 @@ inability to recognize sequences of gestures.
 %    ◦    poor: minimal description, hard to understand/replicate
 %    ◦    acceptable: is specific about what was implemented and explains it well
 %    ◦    exceptional: well written, clear explanations, reproducible: you care about the reader!
-
+\begin{comment}
 In order to study the problem of segmentation of a gesture sequence, we created
 a web-based prototype of a gesture recognition environment using mouse-based
 input, inspired by (and derived from) the \$1 recognizer web-based
 application\cite{wobbrock2007gestures}.
 
-During system use, the user chooses gestures from the pre-defined gesture list, trains the selected gestures by drawing
-the individual gestures, and then draws 1, 2, or 3 arbitrary gestures as
-a single unistroke gesture sequence.
+During system use, the user chooses gestures from the pre-defined gesture list (which can be extended by the user), trains the selected gestures by drawing them individually (usually not more than 5 times). Then the user 
+draws a gesture sequence containing a number of arbitrary gestures which the system will try to recognize. For the purposes of this study, and also for user convenience we restrict the maximum number of gestures in the sequence to be 3, but the system will work for any finite length of the input sequence as well.
+\end{comment}
 
 There are two states in our prototype gesture recognizer: (1) a training state,
 where the user selects a gesture, and trains the chosen gesture by replicating
-it and adding the data as a gesture template, and (2) a recognition state, where
-the user draws a unistroke gesture sequence for subsequent recognition.
+it (usually not more than 5 times) and adding the data as a gesture template, and (2) a recognition state, where
+the user draws a unistroke gesture sequence for subsequent recognition. For the purposes of this study, and also for user convenience we restrict the maximum number of gestures in the sequence to be 3, but the system will work for any finite length of the input sequence as well.
 
 A screenshot of the system in the recognition state is shown in the following figure:
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=6cm, width=9cm]{Images/GUI.png}
+	\includegraphics[height=4cm, width=6cm]{Images/GUI.png}
 	\label{fig1}
 	\caption{Recognition GUI}
 \end{figure}
   
 Our approach, at a high level, is very straightforward, and divided into two
-main steps. The first step is to match each individual gesture against a portion
+steps. The first step is to match each individual gesture against a portion
 of the input data, thereby segmenting the unistroke gesture sequence into the
-first gesture, and the remaining input. The second step is to remove the first
+first gesture, and the remaining input. The second is to remove the first
 gesture from the input sequence and iterate, searching for additional gestures.
 The difficult part is accurately segmenting the unistroke sequence. The following
 section details our segmentation approach.
 
 \subsection*{Segmentation}
 
-The main challenge in our
-approach was to come up with a technique which was neither too strict (as users
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=4cm, width=5cm]{Images/Ambiguity1.png}
+	\label{fig2}
+	\caption{Ambiguity in gesture recognition}
+\end{figure}
+
+The main challenge in our approach was to come up with a segmentation 
+technique which was neither too strict (as users
 generally are unable to repeatedly reproduce gestures exactly) nor too lenient
 (we do not want to recognize noise as a gesture). Additionally, we need an approach
 that is fairly robust to segmentation ambiguities. Because users are not constrained in their choice of gestures,
 ambiguity can exist regarding the appropriate segmentation of a gesture sequence, as shown
-in Figure 2: 
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=5cm, width=5.5cm]{Images/Ambiguity1.png}
-	\label{fig2}
-	\caption{Ambiguity in gesture recognition}
-\end{figure}
+in Figure 2.
 
 During recognition, the user draws a unistroke gesture sequence, which is recorded as an ordered
 list of $(x,y)$ coordinates. It is this sequence of ordered points that is
@@ -242,14 +243,15 @@ All of the candidate templates for the possible individual gestures are
 identified in this manner and then sorted in order of ascending score. The
 minimal score is the best match, and this is the gesture chosen as the first in
 the user's input. An example of the results of this segmentation process is
-shown above in Figure 1.
+shown in Figure 1.
 
 \subsection*{Dynamic Time Warping}
 
 As mentioned above, our algorithm for matching individual gestures is dynamic time warping (DTW).
 DTW is appropriate due to our need for flexible matching of resampled input and template
-gestures. DTW essentially minimizes a distance calculation between two inputs X and Y,
-where each input is sampled over time. DTW ``warps" time to map each sample in X and Y to
+gestures. %DTW essentially minimizes a distance calculation between two inputs X and Y,
+%where each input is sampled over time. 
+DTW ``warps" time to map each sample in inputs X and Y to
 the ``closest" match (as measured by the DTW distance calculation). Recall that our inputs
 have differing numbers of sample points (the template is resampled to $64$ points, but a
 segment of the user's input, less than or equal to the resampled $64$ points, is chosen
@@ -259,7 +261,7 @@ to compare with the template). For our 2-D data, the appropriate distance metric
  dist = \displaystyle\sqrt{(x_1-x_2)^2 + (y_1-y_2)^2}
 \]
 
-Using the minimal cost of neighboring points (we compare three nearby dtw calculations),
+Using the minimal cost of neighboring points (we compare three nearby DTW calculations),
 we map each point \emph{i} in input X to a nearest point \emph{j} in input Y.
 
 %------------------------------------------------
@@ -274,17 +276,19 @@ The unique component of our system is our segmentation routine, but is is tightl
 \begin{enumerate}
 \item Overall Accuracy: This is an all-or-nothing measure. For input sequence of
 lengths 1, 2 or 3, we measured the percentage of trials in which the system
-output both the correct number and correct identity of individual gestures.
+outputs both the correct number and correct identity of individual gestures (a \emph{perfect} match).
 
 \item
 Segmentation Accuracy: For input sequence of lengths 1, 2 or 3, we measured the
-percentage of trials in which the system output the correct \emph{number} of
+percentage of trials in which the system outputs the correct \emph{number} of
 gestures (regardless of correct identification of individual gestures).
 
 \item Relaxed Accuracy: This is a relaxed version of Overall Accuracy relevant
 only to input containing multiple gestures. For input sequences of length 2 or 3,
 we measured the number of gestures in the output that actually appear in the input, accounting for order.
-The purpose of this metric is to measure output where the incorrect number of gestures was identified, or perhaps where the segmentation routine did not ``correctly segment" each gesture, but where the segmentation correctly segmented part of the input gesture sequence.
+The purpose of this metric is to determine %where the incorrect number of gestures was identified, or perhaps 
+where the segmentation routine did not ``correctly segment" the input sequence.
+%each gesture, but where the segmentation correctly segmented part of the input gesture sequence.
 For this metric, we count the first gesture in the input that is correctly identified, count that gesture as $+1$ and continue
 summing over the rest of the output. For example, if the input unistroke gesture sequence is $check, star, \{$, and the system
 outputs the sequence as $v, star, \{$, the
@@ -314,9 +318,9 @@ We calculated the three accuracy metrics for the aggregate data. The results are
     \toprule
     Sequence Length & Accuracy Rate \\
     \midrule
-    1     & 90\% \\
-    2     & 50\% \\
-    3     & 20\% \\
+    1     & 57.5\% \\
+    2     & 32.16\% \\
+    3     & 25.72\% \\
     \bottomrule
     \end{tabular}%
   \label{tab:addlabel}%
@@ -329,9 +333,9 @@ We calculated the three accuracy metrics for the aggregate data. The results are
     \toprule
 	Sequence Length & Segmentation Accuracy \\
     \midrule
-    1     & 100\% \\
-    2     & 80\% \\
-    3     & 60\% \\
+    1     & 71.5\% \\
+    2     & 71.5\% \\
+    3     & 52.27\% \\
     \bottomrule
     \end{tabular}%
   \label{tab:addlabel}%
@@ -344,17 +348,16 @@ We calculated the three accuracy metrics for the aggregate data. The results are
     \toprule
     Sequence Length & Accuracy Rate \\
     \midrule
-    2     & 50\% \\
-    3     & 50\% \\
+    2     & 56.19\% \\
+    3     & 56.37\% \\
     \bottomrule
     \end{tabular}%
   \label{tab:addlabel}%
 \end{table}%
 
-Lastly, we gained insight into the effect of training additional templates for each of the chosen gestures by measuring the Overall Accuracy (for sequences of length 1) and Relaxed Accuracy (for sequences of lengths 2 and 3) for the different phases of the study. The results are shown in Figure 3.
-
 \begin{figure}[H]
-\begin{tikzpicture}[thick,scale=0.85, every node/.style={scale=0.85}]
+\centering
+\begin{tikzpicture}[thick,scale=0.7, every node/.style={scale=0.7}]
     \begin{axis}[
 	    legend pos= outer north east,
 	    legend style={draw=none},
@@ -362,33 +365,24 @@ Lastly, we gained insight into the effect of training additional templates for e
         ylabel=Recognition Rate (\%)
     ]
       \addplot plot coordinates {
-        (1,     90)
-        (2,    91)
-        (3,    93)
-        (4,   97)
-        (5,   99)
-        (10,   99)
-        (20,  100)
+        (1,     60)
+        (3,    70)
+        (5,   86.67)
+        (10,   80)
     };
 
       \addplot plot coordinates {
-        (1,     50)
-        (2,    51)
-        (3,    53)
-        (4,   57)
-        (5,   59)
-        (10,   59)
-        (20,  60)
+        (1,     46.6)
+        (3,    55)
+        (5,   73.33)
+        (10,   70)
     };
 
       \addplot plot coordinates {
-        (1,     20)
-        (2,    21)
-        (3,    23)
-        (4,   27)
-        (5,   29)
-        (10,   29)
-        (20,  30)
+        (1,     39.66)
+        (3,    45)
+        (5,   75.66)
+        (10,   67)
     };
     
     \legend{$Length=1$\\$Length=2$\\$Length=3$\\}
@@ -397,6 +391,8 @@ Lastly, we gained insight into the effect of training additional templates for e
 	\caption{Recognition Rate Vs. Size of Training Data}
 	\label{fig3}
 \end{figure}
+
+Lastly, we gained insight into the effect of training additional templates for each of the chosen gestures by measuring the Overall Accuracy (for sequences of length 1) and Relaxed Accuracy (for sequences of lengths 2 and 3) for the different phases of the study. The results are shown in Figure 3.
 
 %------------------------------------------------
 \section{Discussion}
@@ -408,38 +404,41 @@ Lastly, we gained insight into the effect of training additional templates for e
 
 Glancing at Tables 1, 2 and 3 together, it is apparent that our segmentation
 method yields reasonable, but far from perfect, results. The accuracy rate for
-sequence length 1 of ``JDP TODO" as shown in Table 1 confirms that DTW is an
-excellent choice of algorithm for matching two data sets that vary in time,
+sequence of length 1 as shown in Table 1 confirms that DTW is a
+good algorithm for matching two data sets that vary in time,
 which is exactly the variance we encounter when recognizing individual gestures.
 This fact becomes clearer when we compare the DTW approach to the HMM approach taken by Tanguay \cite{tanguay_jr_hidden_1995}, where he
 achieved a recognition accuracy of
-$60-70\%$ on lower-case English alphabet letters after extensive training.
+$50-60\%$ on lower-case English alphabet letters after extensive training.
 
 Table 1 shows a drop-off in accuracy as the sequence length increases. This
 drop-off indicates a fundamental shortcoming in our approach: improper
-recognition of a gesture results in an improper segmentation, and thus Overall
-Accuracy clearly reflects the ``all or nothing" nature of our approach. A
-comparison for our results of sequences of length 2 is with the results presented by Yang et
-al \cite{yang_gesture_1994}. They report a nearly perfect recognition rate of up to 99.78\%.
-The differences in the approaches (motivated by the differences problem statements, as detailed above), are a key consideration when comparing these numbers.
+recognition of a gesture results in an improper segmentation of the sequence, 
+leading to misrecognition of subsequent gestures. 
+%A comparison for our results of sequences of length 2 is with the results presented by 
+Yang et al \cite{yang_gesture_1994} report a nearly perfect recognition rate of up to 99.78\% for sequences of length 2. The differences in the approaches (motivated by the differences problem statements, as detailed above), 
+are a key consideration when comparing these numbers.
 Yang et al train Hidden Markov models for both individual gestures as well as
 for all possible 2-gesture combinations. The comparison clearly shows that reducing our problem ``complexity'' by training on gesture sequences should yield significantly improved recognition rates.
 
+\begin{comment}
+%Removing this purely for space reasons%
 Table 2 indicates that our algorithm was able to recognize the correct number of
-gestures in input sequences of length 1 80\% of the time.
+gestures in input sequences of length 1 71.5\% of the time.
 This implies that our segmentation routine itself is interfering with simply
 matching each template against the entire input sequence, and comparing that
 score against the ``predicted segmentation''.
-Additionally, comparing the segmentation percentages for lengths 2 and 3 found
-in Table 2 with the corresponding Overall Accuracy rates in Table 1 reveals that
-our segmentation algorithm is identifying the correct number of gestures in
-cases where it doesn't correctly identify each individual gesture exactly.
+Additionally, comparing the segmentation percentages for lengths 2 and 3
+with the corresponding Overall Accuracy rates in Table 1 reveals that
+our segmentation algorithm is able to identify the correct number of gestures even 
+in cases where it may not correctly identify each individual gesture exactly.
+\end{comment}
 
-Note that the data in table 2 is closely related to the data in table 1. In
-particular, table 2 shows the percentage of trials (broken down by length) that
-were correctly segmented into the approprate number of gestures. The data in
-Table 1 shows the percentage of trials that were completely recognized. Note
-that the trials counted in Table 1 are a proper subset of the trials counted in
+
+Table 2 shows the percentage of trials (broken down by length) that
+were correctly segmented into the appropriate number of gestures. The data in
+Table 1 shows the percentage of trials that were completely recognized which 
+is a proper subset of the trials counted in
 Table 2. As a result, one can conclude that the difference in Overall Accuracy
 as compared to Segmentation Accuracy is due to incorrect recognition of
 individual gestures. Thus, this implies that a more robust technique for
@@ -450,18 +449,19 @@ The Relaxed Accuracy results in Table 3 indicate that the system is
 Specifically, when comparing the results for gestures of length 2 in Table 3 to
 the corresponding results in Table 1, the higher Relaxed Accuracy rate indicates
 that the system is more often able to correctly recognize one gesture in the
-sequence.
-This is noteworthy primarily because it implies that training to
+sequence. This is noteworthy primarily because it implies that training to
 ``dis-ambiguate'' gestures (in particular, gestures that the user did not use
 but that were available in the system) may prove effective. The results for
 length 3 are similar.
 
-Figure 3 clearly shows that additional training benefits Overall Accuracy (for
-length 1) and Relaxed Accuracy (for lengths 2 and 3) considerably.
-This result matches the intuition of the effect of tightly coupling the
-segmentation routine and the DTW algorithm. Increasing recognition rates
-increases the ability for the segmentation routine to properly match each
-gesture, and thus properly segment the gesture sequence.
+Figure 3 shows that additional training benefits recognition accuracy (Overall Accuracy for sequences of length 1 and Relaxed Accuracy for 2 and 3 gesture sequences) to an extent.
+%This result matches the intuition of the effect of tightly coupling the
+%segmentation routine and the DTW algorithm. 
+Better recognition rates increase the ability for the segmentation routine to properly match and segment each gesture in the input. However ``excessive'' training may lead to some incorrect recognition
+as the algorithm may overfit the input with respect to the trained templates. 
+Figure 3 indicates that the current system gives optimal results if each
+gesture is trained a maximum of 5 times. Fortuitously, this constraint helps us with our goal of
+having a minimally trained system for gesture recognition.
 
 %shows that we do not require a lot of training data to get a good
 %recognition rate. Even if each gesture has just one template instance during the
@@ -474,7 +474,7 @@ gesture, and thus properly segment the gesture sequence.
 
 % JDP BEGIN
 
-The primary lessons we learned from our project are as follows. First, we
+Of the many lessons we learnt, we
 observed during the study that the gestures themselves were drawn differently
 during training (when gestures were drawn individually) and during
 recognition (when gestures were drawn as part of a gesture sequence). This
@@ -482,17 +482,20 @@ observation is consistent with other research results that indicate
 that a complex motion is ``more than the sum of its parts", or more formally,
 that the transition between gestures in a gesture sequence is critical
 data that can be used to dis-ambiguate potential gesture segmentation choices.
-The second important lesson is that training on gesture sequences is very likely
-to yield impressive accuracy gains. This lesson is indicated primarily by
-comparing with related work (Yang et al).
+%The second important understanding is that training on gesture sequences is very likely
+%to yield impressive accuracy gains as demonstrated by Yang et al.
 
 Regarding future work, our preferred approach to achieving the highest accuracy
 rates for our current problem definition would be to use HMMs and train on
 gesture sequences. Additionally, it would be worthwhile to ease the problem
 constraints and allow the user to intentionally provide ``segmentation cues"
-during a unistroke gesture sequence. A simple, relatively non-intrusive cue
-would be a deliberate pause between gestures in a sequence (which, as an aside,
-occurred naturally during the study).
+%during a unistroke gesture sequence. A simple, relatively non-intrusive cue
+%would be 
+such as a deliberate pause between gestures in a sequence (which, as an aside,
+occurred naturally during the study). Another possible avenue for exploration is to
+allow users to input the gestures in a ``free-form'' manner and not constraining themselves
+to unistroke sequences. This mode of input would allow us to leverage the spatial information
+(such as a space between two words in cursive script) to obtain better segmentation results.
 
 %----------------------------------------------------------------------------------------
 \section{References}
