@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  27 NOV 2012 18:39
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  27 NOV 2012 22:50
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -771,9 +771,6 @@ File: block.tss 2011/12/15
 )
 (./document.aux
 
-LaTeX Warning: Label `fig1' multiply defined.
-
-
 LaTeX Warning: Label `tab:addlabel' multiply defined.
 
 
@@ -943,52 +940,52 @@ File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 <Images/GUI.png, id=4, 897.3525pt x 566.115pt>
 File: Images/GUI.png Graphic file (type png)
  <use Images/GUI.png>
-Package pdftex.def Info: Images/GUI.png used on input line 146.
+Package pdftex.def Info: Images/GUI.png used on input line 171.
 (pdftex.def)             Requested size: 256.06303pt x 170.7169pt.
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <9> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 148.
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 173.
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <12> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 176.
- [1
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 184.
 
-{/usr/local/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./Image
-s/GUI.png>] <Images/Ambiguity1.png, id=14, 395.22656pt x 435.87843pt>
+<Images/Ambiguity1.png, id=5, 395.22656pt x 435.87843pt>
 File: Images/Ambiguity1.png Graphic file (type png)
 
 <use Images/Ambiguity1.png>
-Package pdftex.def Info: Images/Ambiguity1.png used on input line 203.
+Package pdftex.def Info: Images/Ambiguity1.png used on input line 196.
 (pdftex.def)             Requested size: 156.48969pt x 142.26404pt.
+ [1
 
-Overfull \hbox (15.93175pt too wide) detected at line 256
+{/usr/local/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./Image
+s/GUI.png>] [2 <./Images/Ambiguity1.png>]
+Overfull \hbox (15.93175pt too wide) detected at line 296
 \OML/zplm/m/it/10 RelaxedAccuracy \OT1/zplm/m/n/10 = []
  []
 
-[2 <./Images/Ambiguity1.png>] [3] (./document.bbl [4]) [5] (./document.aux)
+[3] (./document.bbl) [4] (./document.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 22136 strings out of 493488
- 487531 string characters out of 3141326
- 637335 words of memory out of 3000000
- 24732 multiletter control sequences out of 15000+200000
- 56859 words of font info for 235 fonts, out of 3000000 for 9000
+ 22057 strings out of 493488
+ 484777 string characters out of 3141326
+ 620174 words of memory out of 3000000
+ 24641 multiletter control sequences out of 15000+200000
+ 56068 words of font info for 244 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
- 63i,19n,93p,666b,2126s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 63i,19n,93p,666b,2142s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
 xlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texl
 ive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texli
-ve/2012/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/local/texlive/20
-12/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/local/texlive/2012/texmf
--dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2012/texmf-dist/f
-onts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2012/texmf-dist/fonts/ty
-pe1/urw/palatino/uplri8a.pfb>
-Output written on document.pdf (5 pages, 204170 bytes).
+ve/2012/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/local/texlive/2012/
+texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2012/texmf-d
+ist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2012/texmf-dist/fon
+ts/type1/urw/palatino/uplri8a.pfb>
+Output written on document.pdf (4 pages, 194892 bytes).
 PDF statistics:
- 58 PDF objects out of 1000 (max. 8388607)
- 40 compressed objects within 1 object stream
+ 51 PDF objects out of 1000 (max. 8388607)
+ 35 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  38935 words of extra memory for PDF output out of 42996 (max. 10000000)
 
