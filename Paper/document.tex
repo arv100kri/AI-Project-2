@@ -401,11 +401,12 @@ Figure 3 clearly indicates that additional training increases both Overall
 Accuracy and Relaxed Accuracy metrics. Importantly, ``excessive'' training (seen
 for 10 templates) may lead to incorrect recognition due to the ``confusion"
 caused by having too many variations of an individual gesture; put another way,
-too many templates \emph{adds} ambiguity.
+too many templates \emph{adds} ambiguity, which supports our objective of training
+the system minimally.
 
 We learned a great deal during this project. Most importantly, a significant
 constraint on possible approaches is added by our problem definition: train only
-using individual gestures. A relaxed problem definition, which would allow us to
+using individual gestures. A relaxed problem definition, in which we would
 train on gesture sequences, would have allowed us to determine the features that
 indicate a segmentation point, such as a slight pause between gestures in a
 gesture sequence (which we observed during the study). A key insight is that the
@@ -418,7 +419,7 @@ gesture sequence) corresponding to the ``distal stimulus X'' and observed via
 ``proximal stimulus Y''. Phrased in this manner, Hidden Markov Models are an
 ideal approach to this problem. Although HMMs require significant training,
 potential future work is to train HMMs on individual gestures and construct HMMs
-for gesture sequences by chaining HMMs for all possible permutations of
+for gesture sequences by chaining the trained HMMs for all possible permutations of
 gestures. The trade-off is increased training time and computational complexity.
 %----------------------------------------------------------------------------------------
 \section{References}
