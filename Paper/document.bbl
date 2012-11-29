@@ -1,11 +1,5 @@
 \begin{thebibliography}{1}
 
-\bibitem{mitra_gesture_2007}
-S.~Mitra and T.~Acharya.
-\newblock Gesture recognition: A survey.
-\newblock {\em Systems, Man, and Cybernetics, Part C: Applications and Reviews,
-  {IEEE} Transactions on}, 37(3):311--324, 2007.
-
 \bibitem{lyddane_donald_united_2006}
 {{Lyddane}, Donald}.
 \newblock United states attorneys' bulletin.
@@ -29,5 +23,10 @@ J.O. Wobbrock, A.D. Wilson, and Y.~Li.
   for user interface prototypes.
 \newblock In {\em Proceedings of the 20th annual ACM symposium on User
   interface software and technology}, pages 159--168. ACM, 2007.
+
+\bibitem{pizlo_perception_2001}
+Zygmunt Pizlo.
+\newblock Perception viewed as an inverse problem.
+\newblock {\em Vision Research}, 41(24):3145--3161, November 2001.
 
 \end{thebibliography}

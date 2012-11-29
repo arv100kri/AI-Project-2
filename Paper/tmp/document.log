@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  27 NOV 2012 22:50
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  28 NOV 2012 21:11
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -466,7 +466,12 @@ File: tikzlibraryplotmarks.code.tex 2008/01/09 v2.10 (rcs-revision 1.1)
 (/usr/local/texlive/2012/texmf-dist/tex/generic/pgf/libraries/pgflibraryplotmar
 ks.code.tex
 File: pgflibraryplotmarks.code.tex 2010/10/15 v2.10 (rcs-revision 1.12)
-))) (/usr/local/texlive/2012/texmf-dist/tex/latex/cite/cite.sty
+)))
+(/usr/local/texlive/2012/texmf-dist/tex/latex/comment/comment.sty
+\CommentStream=\write4
+
+Excluding comment 'comment')
+(/usr/local/texlive/2012/texmf-dist/tex/latex/cite/cite.sty
 LaTeX Info: Redefining \cite on input line 302.
 LaTeX Info: Redefining \nocite on input line 373.
 Package: cite 2010/09/10  v 5.3
@@ -762,10 +767,6 @@ Package: titlesec 2011/12/15 v2.10.0 Sectioning titles
 \titlewidthlast=\dimen232
 \titlewidthfirst=\dimen233
 )
-(/usr/local/texlive/2012/texmf-dist/tex/latex/comment/comment.sty
-\CommentStream=\write4
-
-Excluding comment 'comment')
 (/usr/local/texlive/2012/texmf-dist/tex/latex/titlesec/block.tss
 File: block.tss 2011/12/15
 )
@@ -779,19 +780,19 @@ LaTeX Warning: Label `tab:addlabel' multiply defined.
 )
 \openout1 = `document.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 71.
-LaTeX Font Info:    ... okay on input line 71.
-LaTeX Font Info:    Try loading font information for T1+pplx on input line 71.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Try loading font information for T1+pplx on input line 72.
  (/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/t1pplx.fd
 File: t1pplx.fd 2004/09/06 font definitions for T1/pplx.
 )
@@ -854,7 +855,7 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Info: Redefining \microtypecontext on input line 71.
+LaTeX Info: Redefining \microtypecontext on input line 72.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -908,30 +909,30 @@ Package caption Info: End \AtBeginDocument code.
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplx/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
-LaTeX Font Info:    Try loading font information for OT1+pplx on input line 86.
+LaTeX Font Info:    Try loading font information for OT1+pplx on input line 87.
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/ot1pplx.fd
 File: ot1pplx.fd 2004/09/06 font definitions for OT1/pplx.
 )
-LaTeX Font Info:    Try loading font information for OML+zplm on input line 86.
+LaTeX Font Info:    Try loading font information for OML+zplm on input line 87.
 
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/omlzplm.fd
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMS+zplm on input line 86.
+LaTeX Font Info:    Try loading font information for OMS+zplm on input line 87.
 
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/omszplm.fd
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMX+zplm on input line 86.
+LaTeX Font Info:    Try loading font information for OMX+zplm on input line 87.
 
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
-LaTeX Font Info:    Try loading font information for OT1+zplm on input line 86.
+LaTeX Font Info:    Try loading font information for OT1+zplm on input line 87.
 
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/psnfss/ot1zplm.fd
@@ -940,52 +941,51 @@ File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 <Images/GUI.png, id=4, 897.3525pt x 566.115pt>
 File: Images/GUI.png Graphic file (type png)
  <use Images/GUI.png>
-Package pdftex.def Info: Images/GUI.png used on input line 171.
-(pdftex.def)             Requested size: 256.06303pt x 170.7169pt.
+Package pdftex.def Info: Images/GUI.png used on input line 149.
+(pdftex.def)             Requested size: 227.61006pt x 142.26265pt.
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <9> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 173.
-LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <12> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 184.
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 151.
 
 <Images/Ambiguity1.png, id=5, 395.22656pt x 435.87843pt>
 File: Images/Ambiguity1.png Graphic file (type png)
 
 <use Images/Ambiguity1.png>
-Package pdftex.def Info: Images/Ambiguity1.png used on input line 196.
-(pdftex.def)             Requested size: 156.48969pt x 142.26404pt.
+Package pdftex.def Info: Images/Ambiguity1.png used on input line 164.
+(pdftex.def)             Requested size: 142.26335pt x 113.81123pt.
+LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <12> not available
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 171.
  [1
 
 {/usr/local/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./Image
-s/GUI.png>] [2 <./Images/Ambiguity1.png>]
-Overfull \hbox (15.93175pt too wide) detected at line 296
+s/GUI.png> <./Images/Ambiguity1.png>]
+Overfull \hbox (15.93175pt too wide) detected at line 259
 \OML/zplm/m/it/10 RelaxedAccuracy \OT1/zplm/m/n/10 = []
  []
 
-[3] (./document.bbl) [4] (./document.aux)
+[2] (./document.bbl) [3] (./document.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 22057 strings out of 493488
- 484777 string characters out of 3141326
- 620174 words of memory out of 3000000
- 24641 multiletter control sequences out of 15000+200000
- 56068 words of font info for 244 fonts, out of 3000000 for 9000
+ 22048 strings out of 493488
+ 484643 string characters out of 3141326
+ 638355 words of memory out of 3000000
+ 24633 multiletter control sequences out of 15000+200000
+ 54650 words of font info for 242 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
- 63i,19n,93p,666b,2142s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 63i,19n,93p,650b,2146s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/local/texlive/2012/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
-xlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texl
-ive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texli
-ve/2012/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/local/texlive/2012/
-texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2012/texmf-d
-ist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2012/texmf-dist/fon
-ts/type1/urw/palatino/uplri8a.pfb>
-Output written on document.pdf (4 pages, 194892 bytes).
+exlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/tex
+live/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
+ive/2012/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/local/texlive/2012
+/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2012/texmf-
+dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2012/texmf-dist/fo
+nts/type1/urw/palatino/uplri8a.pfb>
+Output written on document.pdf (3 pages, 182430 bytes).
 PDF statistics:
- 51 PDF objects out of 1000 (max. 8388607)
- 35 compressed objects within 1 object stream
+ 44 PDF objects out of 1000 (max. 8388607)
+ 30 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  38935 words of extra memory for PDF output out of 42996 (max. 10000000)
 

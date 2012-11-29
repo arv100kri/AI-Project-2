@@ -806,7 +806,7 @@ function DollarRecognizer() // constructor
 	//JDP END
 	//JDP BEGIN DTW distance measurement as similarity test....
 	this.DTWForDistance = function(points) {
-		if (points.length < 10) { //this is to work around a bug in function Resample, which loops infinitely when d = 0
+		if (points.length < 10) {
 			return new Array();
 		}
 		var pointsCopy = null;

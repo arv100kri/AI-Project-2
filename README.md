@@ -1,30 +1,58 @@
 6601proj2
 =========
 
-Recognition of Continuous Mouse Gesture Sequences
+Recognition of Unistroke Gesture Sequences
 
-Code built upon project from https://code.google.com/p/mouse-gesture-recognition-java-hidden-markov-model/ written by https://code.google.com/u/104502199478319091201/
+Our code is extended from the $1 Unistroke Recognizer codebase: http://depts.washington.edu/aimgroup/proj/dollar/
 
-Changes from original Java codebase:
+To be precise, we downloaded and modified the dollar.html and dollar.js from that website (available to us via BSD license). Thus, a diff of our files against
+the dollar.html and dollar.js files from the website will output all the code that we developed.
 
-src/com/gt/db:
-  -> ObjectIOFileDataBase.java: Added cross-platform file I/O and added file filter to ignore version control directories (e.g., .svn).
-  -> TrainingTestingDataFiles.java: Cross-platform file I/O
+The following routines in dollar.js are our routines:
 
-src/com/gt/gesture/features:
-  -> GestureFeatureExtractor.java: Removed extraneous console logging statements
-  -> RawFeatureExtractor.java:  Added total time taken to produce RawFeature (for segmentation routine)
+1. DTWForDistanceSegmentation
+3. LearnMatch
+4. DynamicTimeWarp
+5. FindClosestPoint
+6. DTWForDistance
+7. optimizeDistance
+8. GetStrokesByName
+9. GetGestures
+10. EuclideanDistanceFunc
+11. DrawCorners
+12. CopyPointArray
+13. CopyArrayPart
+14. CopyArrayUntilEnd
+15. TranslateUnistroke
+16. ResultSorterFunction
+17. UniformScaleTo
 
-src/com/gt/gesture/mouseCapture
-  -> DataCapturePanel.java: removed extraneous console logging statements
+Additionally, the following methods are not used in our final segmentation routine, and can be considered "construction dust" (but are written by us):
 
-src/com/gt/gesture/proxy
-  -> GestureLikelihoodContainer.java: Added new class to capture gesture recognition metrics
- -> OperationMediator.java: 1) Use GestureLikelihoodContainer class to rank order HMM matches, 2) added iterativeSegmentation() routine and related methods: rawFeatureSplit, sliceFeature, scanForGesture(), class DurationGestureInfoContainer, calculateTrainingGestureDurationStats() for metrics, 
+1. multiRecognize
+2. strokeSimilarity
+3. SegmentationAnalysis
+4. MinGestureLength
+5. FindAllPossibleMatches
+6. FindGestureMatchesInSequence
+7. IncrementalSearch
+8. flattenResults
+9. FindGestures
+10. OptimizeWindowsize
+11. AddNewResults
+12. ThreshholdFilter
+13. DTWByStroke
+14. DTWSequence
+15. DTW
+16. ScoreTarget
+17. StrokeMatchTest
+18. ConcatUnistrokes
+19. ClearCanvas
+20. DrawStroke
+21. DescendingResultSorterFunction
+22. CopyResultSeq
 
-src/com/gt/hmm/classify/vq
-  -> Codebook.java: Removed extraneous console logging statements
-  -> CodeBookDictionary.java: Removed extraneous console logging statements
 
-src/com/gt/UI
-  -> MainApp.java: 1) Added Swing worker threads to generate codebook and HMMs in the background; 2) Modified recognize button action to call iterative segmentation routine and display the best match of gestures
+Additionally, we modified some functions of the $1 Unistroke Recognizer codebase:
+
+1. AddGesture
