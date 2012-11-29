@@ -135,9 +135,9 @@ feature of an ill-conditioned problem most relevant here is the possibility of
 an infinite number of distal stimuli (intended gesture sequences) that produce
 the proximal stimulus (the 2-D point representation of the gesture sequence).
 
-We created a prototype gesture recognizer with two phases of operation: (1) a
-training phase, in which the user selects a gesture and subsequently trains by
-providing additional gesture \emph{templates}, and (2) a recognition phase, in
+We created a prototype gesture recognizer with two modes of operation: (1) a
+training mode, in which the user selects a gesture and subsequently trains by
+providing additional gesture \emph{templates}, and (2) a recognition mode, in
 which the user draws a unistroke gesture sequence for subsequent recognition.
 For the purposes of this study, and also for user convenience, we restrict the
 maximum number of gestures in the sequence to 3, but the system can accept any
@@ -150,8 +150,8 @@ finite length input. A screenshot of the system in recognition mode is shown in 
 	\caption{Recognition GUI}
 \end{figure}
   
-Our approach, at a high level, is estimating the \emph{visual affinity} of an 
-input against multiple pre-existing templates. The first step
+Our approach, at a high level, is to compare the \emph{visual affinity} of an 
+input with pre-existing templates. The first step
 is to match each template against a portion of the input, thereby identifying a
 segment of the input, and the remainder. The second step is to remove the first
 gesture from the input sequence and iterate, searching for additional gestures.
@@ -365,20 +365,20 @@ This fact becomes clearer when we compare the DTW approach to the HMM approach
 taken by Tanguay \cite{tanguay_jr_hidden_1995}, where he achieved a recognition
 accuracy of $50-60\%$ on lower-case English alphabet letters after extensive
 training. Note that the accuracy is lower for our problem than for the
-simplified problem of 1-to-1 gesture template matching due to the ambiguity
-introduced by a gesture sequence. In training phase, where only sequences of
+simplified problem of 1-to-1 gesture template matching due to the complexity
+introduced by allowing a gesture sequence. In the training mode, where only sequences of
 length 1 are allowed, DTW excels at labeling the input correctly.
 
 Table 1 shows a drop-off in accuracy as the sequence length increases. This
 drop-off indicates a fundamental shortcoming in our approach: improper
 recognition of a gesture is concomitant with improper segmentation of the
-gesture sequence, leading to misrecognition of subsequent gestures. Yang et al
+gesture sequence, leading to mis-recognition of subsequent gestures. Yang et al
 \cite{yang_gesture_1994} report a nearly perfect recognition rate of up to
-99.78\% for sequences (only digits) of length 2. The difference in approach (reflecting
-the difference in the objectives of problem statements), is a key consideration when comparing these
-numbers. Yang et al train Hidden Markov models for both individual gestures as
-well as gesture sequences. It is clear that training on gesture sequences
-should yield significantly improved recognition rates.
+99.78\% for sequences of digits up to length 2. The difference in approach is a
+key consideration when comparing these numbers. Yang et al train Hidden Markov
+models for both individual gestures as well as gesture sequences. It is probable
+that training on gesture sequences will yield significantly improved
+recognition rates.
 
 Table 2 shows the percentage of trials that were correctly segmented into the
 correct number of gestures. Note that, for each length, the trials in which
@@ -398,29 +398,28 @@ intended specifically to address gesture ambiguity (including ambiguity with the
 Accuracy.
 
 Figure 3 clearly indicates that additional training increases both Overall
-Accuracy and Relaxed Accuracy metrics. Importantly, ``excessive'' training may
-lead to incorrect recognition due to the ``confusion" caused by having too many
-variations of an individual gesture; put another way, too many templates
-\emph{adds} ambiguity (``overfitting'').
+Accuracy and Relaxed Accuracy metrics. Importantly, ``excessive'' training (seen
+for 10 templates) may lead to incorrect recognition due to the ``confusion"
+caused by having too many variations of an individual gesture; put another way,
+too many templates \emph{adds} ambiguity.
 
-
-We learned a great deal during this project. Most importantly, we significantly constrained
-ourselves by training only on individual gestures. A key insight is that had we relaxed 
-the problem (and as a result our objective) to also train on gesture sequences, 
-it would have allowed us to determine the features 
-that indicate a segmentation point, such as a slight pause between 
-gestures in a gesture sequence (which we observed during the study). Thus,
-having knowledge about the transition between gestures in a gesture sequence would have
-helped us to dis-ambiguate potential gesture segmentation choices.
+We learned a great deal during this project. Most importantly, a significant
+constraint on possible approaches is added by our problem definition: train only
+using individual gestures. A relaxed problem definition, which would allow us to
+train on gesture sequences, would have allowed us to determine the features that
+indicate a segmentation point, such as a slight pause between gestures in a
+gesture sequence (which we observed during the study). A key insight is that the
+transition data itself is of great use when choosing among potential gesture
+segmentation points.
 
 Reflecting upon the nature of the inverse perception problem, we hypothesize
 that the problem is defined by identification of a hidden state (the intended
 gesture sequence) corresponding to the ``distal stimulus X'' and observed via
-``proximal stimulus Y''. Phrased in this manner,  Hidden Markov Models are ideal technique
-to tackle this problem. Although HMMs require a larger training period, potential future work
-could be to train HMMs on individual gestures and construct HMMs for all possible permutations
-of gestures (i.e any gesture sequence) by simply chaining the already trained HMMs; this could lead to
-better recognition rates at the expensive of time and computation power.
+``proximal stimulus Y''. Phrased in this manner, Hidden Markov Models are an
+ideal approach to this problem. Although HMMs require significant training,
+potential future work is to train HMMs on individual gestures and construct HMMs
+for gesture sequences by chaining HMMs for all possible permutations of
+gestures. The trade-off is increased training time and computational complexity.
 %----------------------------------------------------------------------------------------
 \section{References}
 
