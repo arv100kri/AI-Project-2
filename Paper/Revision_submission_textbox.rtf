@@ -1,0 +1,44 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
+{\fonttbl\f0\fnil\fcharset0 Monaco;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red190\green190\blue190;}
+\margl1440\margr1440\vieww10380\viewh10860\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs22 \cf2 Member\cf0  \cf2 #1:\cf0  \cf2 Justin\cf0  \cf2 Permar\cf0  \cf2 -\cf0  \cf2 GT\cf0  \cf2 ID:902931271\cf0 \
+\cf2 Member\cf0  \cf2 #2:\cf0  \cf2 Arvind\cf0  \cf2 Krishnaa\cf0  \cf2 Jagannathan\cf0  \cf2 -\cf0  \cf2 GT\cf0  \cf2 ID:\cf0  \cf2 902891874\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+\
+A (0.75)\
+----------------------------------------------\
+Comments\
+--------\
+"How is path sampled? Geometrically or temporally?"\
+"Explain further why the 90% criterion invalidates input? Why can it not be scaled?"\
+"Why do you have to resample the template? It should be static, right?"\
+\
+Changes\
+--------\
+We completely re-wrote our approach for clarity and to address the review panel's questions.\
+\
+E (2)\
+---------------------------------------------------------\
+Comments\
+--------\
+"Use lines which can be distinguished on black & white printout"\
+\
+Changes\
+--------\
+We modified Figure 3 to have a unique mark for each data series which is easily distinguished on a black & white printout.\
+\
+D (2)\
+-------------------------\
+Comments\
+--------\
+"Why is it better at counting gestures than recognizing them?"\
+\
+Changes\
+--------\
+We recognize the importance of the reviewer's question; however, we do not have results that provide an answer, and do not think we can answer the question in the paper. We hypothesize that the answer is related to the fact that we don't scale user input. Gestures drawn by a given user are all at approximately the same scale; as a result, any match is going to splice off a similar portion of the user's input, with the consequence that the total number of gestures is properly counted, regardless of whether or not each individual gesture was correctly identified.}

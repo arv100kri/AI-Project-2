@@ -145,19 +145,20 @@ finite length input. A screenshot of the system in recognition mode is shown in 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=5cm, width=8cm]{Images/GUI.png}
+	\includegraphics[height=4cm, width=6cm]{Images/GUI.png}
 	\label{fig1}
 	\caption{Recognition GUI}
 \end{figure}
   
-Our approach, at a high level, is to compare the \emph{visual affinity} of an 
-input with pre-existing templates. The first step
-is to match each template against a portion of the input, thereby identifying a
-segment of the input, and the remainder. The second step is to remove the first
-gesture from the input sequence and iterate, searching for additional gestures.
-A challenge to designing our approach was to account for variability in user
-input. A feature of the inverse perception problem appears in the form
-of segmentation ambiguity, as depicted in Figure 2.
+Our approach, at a high level, is to compare the \emph{visual affinity} of an
+input with pre-existing templates. The first step is to match each template
+against a portion of the input in order to identify a ``segmentation point''
+that splits the input into a matched gesture and the remainder. The second step is to remove the
+matched gesture from the input sequence and iterate, repeatedly searching for
+additional gestures in the remainder of the user input. A challenge to designing
+our approach was to account for variability in user input. A feature of the
+inverse perception problem appears in the form of segmentation ambiguity, as
+depicted in Figure 2.
 
 \begin{figure}[H]
 	\centering
@@ -166,46 +167,46 @@ of segmentation ambiguity, as depicted in Figure 2.
 	\caption{Ambiguity in gesture recognition}
 \end{figure}
 
-In the next section, we present details on our segmentation approach.
+In the next section, we present details of our segmentation routine that determines
+the portion of the user's input that matches a template.
 
 \subsection*{Segmentation}
 
 During recognition, the user draws a unistroke gesture sequence, which is
-recorded as an ordered list of $(x,y)$ coordinates. Each gesture template is
-compared with the user's input. First, the template gesture is resampled to $64$
-equidistant points in order to perform pointwise comparison against the user
-input. Resampling is essential when comparing templates of \emph{individual}
-gestures against the user input, which may contain \emph{one or more} individual
-gestures. A fundamental insight into the problem that justifies our approach is
-that a sequence of gestures is \emph{typically} (although not always) going to
-have a longer 2-D path length than a single gesture. Next, the user's input is
-also resampled, primarily to smooth out noise. We found that $64$ points was
-high enough to retain the resolution necessary to disambiguate gestures and low
-enough to be computationally inexpensive. Additionally, this number was
+recorded as an ordered list of $(x,y)$ coordinates. The user's input, as noted
+above, may contain one or more individual gestures. However, the template, by
+definition, is one gesture. As a result, we need to compare a portion of the
+user's input with the template.
+The question is: what portion? An insight into our problem that helps answer
+this question is the observation that the same user provided both the template
+and the input, and that both are drawn to a similar scale. As a result, the
+user's input, if it contains this template, must have a path length
+approximately equal to or greater than the path length \emph{x} of the template.
+Conversely, if the user's input has a path length less than \emph{x}, then the input cannot contain the template. We repeatedly perform
+this calculation for each template; the templates that are a potential match
+are subsequently scored.
+
+We score the difference between
+a portion of the user's input and the given template using Dynamic Time Warping
+(DTW, see next section for details). DTW essentially performs a flexible
+comparison between two inputs that have been sampled over time. In order to generate
+input suitable for DTW, we re-sample both the user's input and the template
+to $64$ equidistant points. Although the points are equidistant (due to the matching
+considerations discussed above), the points are also ordered with respect to time, which
+allows us to provide them as input to the DTW calculation. Additionally,
+there are two benefits to re-sampling: 1) re-sampling smooths out noise, and 2)
+re-sampling with $64$ points is enough to retain the resolution necessary to disambiguate gestures
+but also low enough to be computationally inexpensive. Additionally, this number was
 successfully used by the \$1 Recognizer\cite{wobbrock2007gestures}.
 
-After resampling, the path length of the template is calculated and a threshold
-is set at $90\%$ of the full path length. The purpose of the threshold is to
-ensure that we don't require the full template data set to appear in the user's
-input, which we felt was an intuitive and valid consideration (to see this,
-simply consider the scenario for a gesture sequence of length $1$). The next
-step is to calculate the corresponding number of points in the user's input
-whose path length approximately equals the thresholded template path length.
-Note that if $90\%$ of the full path length is longer than the path length of
-the user input, the potential match is invalidated and skipped.
-
-To determine a quantitative measure of the match, we score the segment pointwise
-via dynamic time warping (see next section). At this point, we have a candidate
-segment of user input with a score (lower indicates a better match) calculated
-for a candidate point that separates the first identified gesture from the
-remainder. However, it may be the case that a nearby point is actually a better
-match (indicated by a smaller score). We test for the existence of a better
-``segmentation point'' by searching both backward and forward in the user input,
-repeatedly calculating the score. After the minimal score is computed, it is
-stored for comparison against all other templates.
-
-All of the gesture templates are scored in this manner and then sorted. The
-smallest score is the best match, and this is marked as the identified gesture. An example
+Our routine contains one other noteworthy optimization aimed at
+determining the most accurate segmentation point. After the routine determines
+an initial candidate segmentation point, as described above, it is possible that
+a nearby point is actually a better match (indicated by a smaller DTW score).
+We look for a better segmentation point (indicated by a smaller score) by
+searching backward and forward from the initial candidate point, repeatedly calculating
+the score. The segmentation point corresponding to the minimal score is marked as the 
+point of segmentation, and the matched gesture is spliced from the input sequence. An example
 of the segmentation points for a unistroke gesture sequence is shown in Figure 1.
 
 \subsection*{Dynamic Time Warping}
@@ -337,7 +338,7 @@ sequences of lengths 2 and 3) for the different recognition phases.
         (10,   70)
     };
 
-      \addplot plot coordinates {
+      \addplot plot[mark=triangle] coordinates {
         (1,     39.66)
         (3,    45)
         (5,   75.66)
