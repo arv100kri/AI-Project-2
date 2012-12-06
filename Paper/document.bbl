@@ -1,0 +1,26 @@
+\begin{thebibliography}{1}
+
+\bibitem{pizlo_perception_2001}
+Zygmunt Pizlo.
+\newblock Perception viewed as an inverse problem.
+\newblock {\em Vision Research}, 41(24):3145--3161, November 2001.
+
+\bibitem{yang_gesture_1994}
+J.~Yang, Y.~Xu, and C.~S. Chen.
+\newblock Gesture interface: Modeling and learning.
+\newblock In {\em Robotics and Automation, 1994. Proceedings., 1994 {IEEE}
+  International Conference on}, pages 1747--1752, 1994.
+
+\bibitem{tanguay_jr_hidden_1995}
+D.~O. Tanguay~Jr.
+\newblock Hidden markov models for gesture recognition.
+\newblock Master's thesis, Massachusetts Institute of Technology, 1995.
+
+\bibitem{wobbrock2007gestures}
+J.O. Wobbrock, A.D. Wilson, and Y.~Li.
+\newblock Gestures without libraries, toolkits or training: a \$1 recognizer
+  for user interface prototypes.
+\newblock In {\em Proceedings of the 20th annual ACM symposium on User
+  interface software and technology}, pages 159--168. ACM, 2007.
+
+\end{thebibliography}

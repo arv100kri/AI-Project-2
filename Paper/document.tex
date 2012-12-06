@@ -86,19 +86,30 @@
 \section{Problem Statement}
 \lettrine[nindent=0em,lines=2]{G}esture recognition is a sizable research area,
 due to the many uses and applications of gesture detection.
-One important domain where gestures are frequently encountered is law
-enforcement, where a significant concern is recognition of gang symbols in
-graffiti and other forms of hand-written communication. The United States
-Federal Bureau of Investigation's Safe Streets and Gang Unit commonly encounters
-handwritten communication using custom gestures\cite{lyddane_donald_united_2006}. 
-
-Inspired by this problem of gesture recognition, we focused our efforts on a
-similar problem with common features. Our problem is recognition of a unistroke
+%Inspired by this problem of gesture recognition, we focused our efforts on a
+%similar problem with common features. 
+Our problem is recognition of a unistroke
 gesture sequence, defined as a continuous stroke (unistroke) consisting of
-multiple gestures defined \textit{a priori} (see Figure 2). In our opinion, this
-problem description is analogous to identifying known gang symbols in grafitti
-markings. An additional constraint is to use little to no training data, analogous to the
-extremely small amount of evidence typically available to law enforcement officials.
+multiple gestures defined \textit{a priori} (see Figure 2).
+This problem is significant because it is an instance of an ``inverse
+perception problem'', an acknowledged ``hard problem''
+\cite{pizlo_perception_2001}. 
+
+An inverse perception problem, as
+described by Pizlo, ``is about inferring the properties of the distal stimulus X
+given the proximal stimulus Y''. Re-phrasing for our specific problem, the question
+we are asking is: given an input unistroke gesture sequence, which individual
+gestures comprise the input? This is difficult to answer because
+more than one permutation of "distal stimulus X" (actual gestures drawn by the user)
+produce the "proximal stimulux Y" (the unistroke gesture sequence)
+that is the input we are processing. This leads to recognition ambiguity, as illustrated in Figure 1.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=4cm, width=5cm]{Images/Ambiguity1.png}
+	\label{fig2}
+	\caption{Ambiguity in gesture recognition}
+\end{figure}
 
 %Problem addressed and its importance
 %    ⁃    poor: does not mention problem or does not say why it is important
@@ -125,30 +136,12 @@ sequences.
 %    ◦    poor: minimal description, hard to understand/replicate
 %    ◦    acceptable: is specific about what was implemented and explains it well
 %    ◦    exceptional: well written, clear explanations, reproducible: you care about the reader!
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=4cm, width=5cm]{Images/Ambiguity1.png}
-	\label{fig2}
-	\caption{Ambiguity in gesture recognition}
-\end{figure}
-
-Recognizing a unistroke gesture sequence properly is difficult primarily due to
-the nature of the problem, described in the literature as an ``inverse
-perception problem'', which is an acknowledged ``hard problem''
-\cite{pizlo_perception_2001}. An inverse perception problem, as
-described by Pizlo, ``is about inferring the properties of the distal stimulus X
-given the proximal stimulus Y'', and the problem is ``ill-conditioned''. A
-feature of an ill-conditioned problem most relevant here is the possibility of
-an infinite number of distal stimuli (intended gesture sequences) that produce
-the proximal stimulus (the 2-D point representation of the gesture sequence). A feature of the
-inverse perception problem appears in the form of segmentation ambiguity, as
-depicted in Figure 1.
 
 We created a prototype gesture recognizer with two modes of operation: (1) a
 training mode, in which the user selects a gesture and subsequently trains by
 providing additional gesture \emph{templates}, and (2) a recognition mode, in
 which the user draws a unistroke gesture sequence for subsequent recognition.
-For the purposes of this study, and also for user convenience, we restrict the
+For evaluation purposes, we restrict the
 maximum number of gestures in the sequence to 3, but the system can accept any
 finite length input. A screenshot of the system in recognition mode is shown in the following figure:
 
@@ -165,7 +158,7 @@ the input to a known gesture template? The first step is to match each
 template against a portion of the input in order to identify a ``segmentation
 point'' that splits the input into a matched gesture and the remainder. The
 second step is to remove the matched gesture from the input sequence and
-iterate, repeatedly searching for additional gestures in the remainder of the
+iterate, repeatedly searching for additional gestures in the remaining
 user input. A challenge to designing our approach was to account for variability
 in user input. In the next section, we present details of our segmentation
 routine.
@@ -202,8 +195,8 @@ successfully used by the \$1 Recognizer\cite{wobbrock2007gestures}.
 Our routine contains one other noteworthy optimization aimed at
 determining the most accurate segmentation point. After the routine determines
 an initial candidate segmentation point, as described above, it is possible that
-a nearby point is actually a better match (indicated by a smaller DTW score).
-We look for a better segmentation point (indicated by a smaller score) by
+a nearby point is actually a better match.
+We look for a better segmentation point (indicated by a smaller DTW score) by
 searching backward and forward from the initial candidate point, repeatedly calculating
 the score. The segmentation point corresponding to the minimal score is marked as the 
 point of segmentation, and the matched gesture is spliced from the input sequence. An example
@@ -214,13 +207,13 @@ of the segmentation points for a unistroke gesture sequence is shown in Figure 2
 As mentioned above, our algorithm for scoring template gestures is dynamic time
 warping (DTW). DTW is appropriate due to our need for flexible matching of
 resampled input and template gestures. DTW ``warps" time to map each data point in
-inputs X to the ``closest" matching point in input Y (as measured by the DTW distance
+input X to the ``closest" matching point in input Y (as measured by the DTW distance
 calculation). Recall that our inputs have differing numbers of sample points
 (the template is resampled to $64$ points, but a segment of the user's input,
 less than or equal to $64$ points, is chosen to compare with the template). For
 our 2-D data, the appropriate distance metric is Euclidean distance. Using the
 minimal cost of neighboring points (we compare the distance score for three ``nearby" points),
-we map each point \emph{i} in input X to a nearest point \emph{j} in input Y.
+we map each point \emph{i} in the user input to a nearby point \emph{j} in a gesture template.
 
 %------------------------------------------------
 \section{Evaluation}
@@ -408,20 +401,29 @@ the system minimally.
 We learned a great deal during this project. Most importantly, a significant
 constraint on possible approaches is added by our problem definition: train only
 using individual gestures. A relaxed problem definition, in which we would
-train on gesture sequences, would have allowed us to determine the features that
-indicate a segmentation point, such as a slight pause between gestures in a
-gesture sequence (which we observed during the study). A key insight is that the
-transition data itself is of great use when choosing among potential gesture
-segmentation points.
+train on gesture sequences, would have allowed us to obtain transition data in order to determine the features 
+indicating a segmentation point, such as a slight pause between gestures in a
+gesture sequence (which we observed during the study). Another important observation from our study was that users
+were able to faithfully reproduce the individual gestures during training mode, but due to obvious
+physical constraints of drawing a gesture sequence in one stroke of the mouse, were unable to
+do so in recognition mode. Had we conducted ``user orientation'', where we literally
+train the user to ``accurately'' draw gesture sequences, we believe that our recognition rates would have been higher. 
+Moreover, since we have no restriction on the gestures that could be given as input,
+it was not possible for us to leverage any kind of ``grammar'' to improve the recognition accuracy
+(as is normally done in handwriting recognition).
 
+\begin{comment}
 Reflecting upon the nature of the inverse perception problem, we hypothesize
 that the problem is defined by identification of a hidden state (the intended
 gesture sequence) corresponding to the ``distal stimulus X'' and observed via
-``proximal stimulus Y''. Phrased in this manner, Hidden Markov Models are an
-ideal approach to this problem. Although HMMs require significant training,
-potential future work is to train HMMs on individual gestures and construct HMMs
-for gesture sequences by chaining the trained HMMs for all possible permutations of
-gestures. The trade-off is increased training time and computational complexity.
+``proximal stimulus Y''. Phrased in this manner, 
+\end{comment}
+
+We realized that Hidden Markov Models are an attractive alternative approach to this problem. 
+Although HMMs require significant training, potential future work is to train HMMs on 
+individual gestures and construct HMMs for gesture sequences by chaining the trained 
+HMMs for all possible permutations of gestures. The trade-off is increased training time 
+and computational complexity.
 %----------------------------------------------------------------------------------------
 \section{References}
 
