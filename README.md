@@ -56,3 +56,7 @@ Additionally, the following methods are not used in our final segmentation routi
 Additionally, we modified some functions of the $1 Unistroke Recognizer codebase:
 
 1. AddGesture
+
+Extension of $1 Recognizer
+
+The project's actual source files are in the dtw folder. The HTML file is the UI for the project
